@@ -73,7 +73,7 @@ class Navbar extends React.Component{
                             {/* <!-- Begin Header Logo Area --> */}
                             <div className="col-lg-3">
                                 <div className="logo pb-sm-30 pb-xs-30">
-                                    <a href="assets/index.html">
+                                    <a href="/">
                                         <img src="assets/images/menu/logo/1.jpg" alt=""/>
                                     </a>
                                 </div>
@@ -278,6 +278,7 @@ class Navbar extends React.Component{
                                                     </li>
                                                 </ul>
                                             </li>
+{/* 
                                             <li className="dropdown-holder"><a href="assets/blog-left-sidebar.html">Blog</a>
                                                 <ul className="hb-dropdown">
                                                     <li className="sub-dropdown-holder"><a href="assets/blog-left-sidebar.html">Blog Grid View</a>
@@ -352,7 +353,10 @@ class Navbar extends React.Component{
                                                 </ul>
                                             </li>
                                             <li><a href="assets/about-us.html">About Us</a></li>
-                                            <li><a href="assets/contact.html">Contact</a></li>
+                                            <li><a href="assets/contact.html">Contact</a></li> */}
+
+
+
                                             {/* <li><a href="/Shop">Shop</a></li> */}
                                             <li><a href="/ChatRoom">Chat Room</a></li>
                                             <li><a href="/ProductDetail">Product Detail</a></li>

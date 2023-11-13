@@ -236,7 +236,7 @@ class Navbar extends React.Component{
                                 <div className="hb-menu">
                                     <nav>
                                         <ul>
-                                            <li className="dropdown-holder"><a href="/Shop">Home</a>
+                                            <li className="dropdown-holder"><a href="/">Home</a>
                                                 <ul className="hb-dropdown">
                                                     <li><a href="assets/index.html">Home One</a></li>
                                                     <li><a href="assets/index-2.html">Home Two</a></li>
@@ -353,8 +353,11 @@ class Navbar extends React.Component{
                                             </li>
                                             <li><a href="assets/about-us.html">About Us</a></li>
                                             <li><a href="assets/contact.html">Contact</a></li>
-                                            <li><a href="/Shop">Shop</a></li>
+                                            {/* <li><a href="/Shop">Shop</a></li> */}
                                             <li><a href="/ChatRoom">Chat Room</a></li>
+                                            <li><a href="/ProductDetail">Product Detail</a></li>
+                                            <li><a href="/ShoppingChart">Shopping Chart</a></li>
+                                            <li><a href="/Checkout">Checkout</a></li>
                                             <li><a href="/Login">Login</a></li>
                                         </ul>
                                     </nav>

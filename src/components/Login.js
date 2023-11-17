@@ -2,18 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 //import validation from './Validationsignup'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const [User_Name, set_User_Name] = useState('');
     const [Pass, set_Pass] = useState('');
 
-        axios.defaults.withCredentials = true;
         const navigate = useNavigate()
-        axios.defaults.withCredentials = true;
-   
         const handleSubmit = (event) => {
             event.preventDefault();
             axios.post('https://souq-marketplace-api.onrender.com/login', {username: User_Name, password: Pass})
@@ -342,12 +338,6 @@ function Login() {
             </div>
             {/* <!-- Footer Area End Here --> */}
         </div>
-
-        
-        
-
         )
-    }
-
-
+}
 export default Login;

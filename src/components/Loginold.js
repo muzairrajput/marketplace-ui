@@ -1,35 +1,7 @@
-import React from 'react'
-import { useState } from 'react'
-//import validation from './Validationsignup'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
 
-function Login() {
-    function Login() {
-    const [errorMessage, setErrorMessage] = useState('');
-    const [User_Name, set_User_Name] = useState('');
-    const [Pass, set_Pass] = useState('');
-
-        axios.defaults.withCredentials = true;
-        const navigate = useNavigate()
-        axios.defaults.withCredentials = true;
-   
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            axios.post('https://souq-marketplace-api.onrender.com/login', {username: User_Name, password: Pass})
-            .then(Response => {
-                if(Response.data.Status === 'Success') {
-                    console.log("sucess")
-                    navigate('/');
-                } else {
-                    console.log("error");
-                    setErrorMessage('Invalid username or password. Please try again.');
-                }
-            })
-            .catch(err => console.log(err));
-        }
-       
-   
+class Login extends React.Component{
+    render(){
         return (
             <div>     
             <div className="breadcrumb-area">
@@ -49,17 +21,17 @@ function Login() {
                     <div className="row">
                         <div className="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                             {/* <!-- Login Form s--> */}
-                            <form onSubmit={handleSubmit} >
+                            <form action="#" >
                                 <div className="login-form">
                                     <h4 className="login-title">Login</h4>
                                     <div className="row">
                                         <div className="col-md-12 col-12 mb-20">
-                                            <label>Username*</label>
-                                            <input className="mb-0" type="text" placeholder="User Name" onChange={e => set_User_Name(e.target.value)}/>
+                                            <label>Email Address*</label>
+                                            <input className="mb-0" type="email" placeholder="Email Address"/>
                                         </div>
                                         <div className="col-12 mb-20">
                                             <label>Password</label>
-                                            <input className="mb-0" type="password" placeholder="Password" onChange={e => set_Pass(e.target.value)}/>
+                                            <input className="mb-0" type="password" placeholder="Password"/>
                                         </div>
                                         <div className="col-md-8">
                                             <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -76,7 +48,6 @@ function Login() {
                                     </div>
                                 </div>
                             </form>
-                            {errorMessage && <div className="error-message">{errorMessage}</div>}
                         </div>
                         <div className="col-sm-12 col-md-12 col-lg-6 col-xs-12">
                             <form action="#">
@@ -348,6 +319,6 @@ function Login() {
 
         )
     }
-
+}
 
 export default Login;

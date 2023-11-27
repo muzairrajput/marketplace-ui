@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar(){
     return (
@@ -121,45 +122,16 @@ function Navbar(){
                                     <ul>
                                         <li className="dropdown-holder"><a href="/">Home</a>
                                         </li>
-                                        <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">Shop</a>
+                                        <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">Categories</a>
                                             <ul className="megamenu hb-megamenu">
-                                                <li><a href="assets/shop-left-sidebar.html">Shop Page Layout</a>
-                                                    <ul>
-                                                        <li><a href="assets/shop-3-column.html">Shop 3 Column</a></li>
-                                                        <li><a href="assets/shop-4-column.html">Shop 4 Column</a></li>
-                                                        <li><a href="assets/shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                                        <li><a href="assets/shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                                        <li><a href="assets/shop-list.html">Shop List</a></li>
-                                                        <li><a href="assets/shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                                                        <li><a href="assets/shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                                    </ul>
+                                                <li>
+                                                    <a href='/shop?category=beauty'>Beauty & Cosmetics</a>
                                                 </li>
-                                                <li><a href="assets/single-product-gallery-left.html">Single Product Style</a>
-                                                    <ul>
-                                                        <li><a href="assets/single-product-carousel.html">Single Product Carousel</a></li>
-                                                        <li><a href="assets/single-product-gallery-left.html">Single Product Gallery Left</a></li>
-                                                        <li><a href="assets/single-product-gallery-right.html">Single Product Gallery Right</a></li>
-                                                        <li><a href="assets/single-product-tab-style-top.html">Single Product Tab Style Top</a></li>
-                                                        <li><a href="assets/single-product-tab-style-left.html">Single Product Tab Style Left</a></li>
-                                                        <li><a href="assets/single-product-tab-style-right.html">Single Product Tab Style Right</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="assets/single-product.html">Single Products</a>
-                                                    <ul>
-                                                        <li className="active"><a href="assets/single-product.html">Single Product</a></li>
-                                                        <li><a href="assets/single-product-sale.html">Single Product Sale</a></li>
-                                                        <li><a href="assets/single-product-group.html">Single Product Group</a></li>
-                                                        <li><a href="assets/single-product-normal.html">Single Product Normal</a></li>
-                                                        <li><a href="assets/single-product-affiliate.html">Single Product Affiliate</a></li>
-                                                    </ul>
+                                                <li>
+                                                    <a href='/shop?category=hardware'>Hardware</a>
                                                 </li>
                                             </ul>
                                         </li>
-
-                                        {/* <li><a href="/Shop">Shop</a></li> */}
-                                        <li><a href="/ChatRoom">Chat Room</a></li>
-                                        <li><a href="/ProductDetail">Product Detail</a></li>
-                                        <li><a href="/ShoppingChart">Shopping Chart</a></li>
                                         <li><a href="/Checkout">Checkout</a></li>
                                         <li><a href="/Login">Login</a></li>
                                     </ul>

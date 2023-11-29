@@ -2,22 +2,28 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-const Shop = () => {
+const Shop = ({addCartItem}) => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const category = queryParams.get('category');
 
-    const [products, setProducts] = useState({});
+    const [products, setProducts] = useState([]);
+    const addToCart = (cartItem) => {
+        addCartItem(cartItem);
+    };
+
+
     useEffect(() => {
         // GET request using axios inside useEffect React hook
-        axios.get(`https://souq-marketplace-api.onrender.com/product?category=${category}`)
+        const url = `https://souq-marketplace-api.onrender.com/product?category=${category}`;
+        axios.get(url)
             .then(response => {
                 setProducts(response.data);
             })
             .catch(error => {
               console.error('There was an error!', error);
             });
-      }, []);
+      }, [category]);
 
     return (
         <div>
@@ -90,9 +96,16 @@ const Shop = () => {
                                                                 </div>
                                                                 <div className="add-actions">
                                                                     <ul className="add-actions-link">
-                                                                        <li className="add-cart active"><a href="shopping-cart.html">Add to cart</a></li>
-                                                                        <li><a href="/" title="quick view" className="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-eye"></i></a></li>
-                                                                        <li><a className="links-details" href="wishlist.html"><i className="fa fa-heart-o"></i></a></li>
+                                                                        <li className="add-cart active" onClick={() => {
+                                                                                var cartItem = {};
+                                                                                cartItem["ProductID"] = p.Product_ID;
+                                                                                cartItem["CustomerID"] = p.CustomerID;
+                                                                                cartItem["Quantity"] = 1;
+                                                                                cartItem["UnitPrice"] = p.Price;
+                                                                                addToCart(cartItem);
+                                                                            }}>
+                                                                            Add to Cart
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>

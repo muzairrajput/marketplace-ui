@@ -1,7 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
-function Navbar(){
+const Navbar = ({cartItems}) => {
+
+    useEffect(() => {
+        // This code will run whenever the count prop changes
+        console.log('Count has changed:', cartItems.length);
+      }, [cartItems]);
+
     return (
     <div>
         <header>
@@ -22,23 +27,6 @@ function Navbar(){
                         <div className="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                             {/* <!-- Begin Header Middle Searchbox Area --> */}
                             <form action="#" className="hm-searchbox">
-                                <select className="nice-select select-search-category">
-                                    <option value="0">All</option>                         
-                                    <option value="10">Laptops</option>                     
-                                    <option value="17">- -  Prime Video</option>                    
-                                    <option value="20">- - - -  All Videos</option>                     
-                                    <option value="21">- - - -  Blouses</option>                        
-                                    <option value="22">- - - -  Evening Dresses</option>                
-                                    <option value="23">- - - -  Summer Dresses</option>                     
-                                    <option value="24">- - - -  T-shirts</option>                       
-                                    <option value="25">- - - -  Rent or Buy</option>                        
-                                    <option value="26">- - - -  Your Watchlist</option>                     
-                                    <option value="27">- - - -  Watch Anywhere</option>                     
-                                    <option value="28">- - - -  Getting Started</option>         
-                                    <option value="18">- - - -  Computers</option>         
-                                    <option value="13">Cameras</option>                              
-                                    <option value="16">Accessories</option>
-                                </select>
                                 <input type="text" placeholder="Enter your search key ..."/>
                                 <button className="li-btn" type="submit"><i className="fa fa-search"></i></button>
                             </form>
@@ -46,20 +34,12 @@ function Navbar(){
                             {/* <!-- Begin Header Middle Right Area --> */}
                             <div className="header-middle-right">
                                 <ul className="hm-menu">
-                                    {/* <!-- Begin Header Middle Wishlist Area --> */}
-                                    <li className="hm-wishlist">
-                                        <a href="/ShoppingChart">
-                                            <span className="cart-item-count wishlist-item-count">0</span>
-                                            <i className="fa fa-heart-o"></i>
-                                        </a>
-                                    </li>
-                                    {/* <!-- Header Middle Wishlist Area End Here --> */}
                                     {/* <!-- Begin Header Mini Cart Area --> */}
                                     <li className="hm-minicart">
                                         <div className="hm-minicart-trigger">
                                             <span className="item-icon"></span>
-                                            <span className="item-text">£80.00
-                                                <span className="cart-item-count">2</span>
+                                            <span className="item-text">
+                                                <span className="cart-item-count">{cartItems.length}</span>
                                             </span>
                                         </div>
                                         <span></span>

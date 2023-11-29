@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ShoppingChart extends React.Component{
+class ShoppingCart extends React.Component{
     render(){
         return (
         <div>
@@ -337,4 +337,4 @@ class ShoppingChart extends React.Component{
     }
 }
 
-export default ShoppingChart;
+export default ShoppingCart;

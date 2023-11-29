@@ -56,12 +56,11 @@ const ChatroomDetail = ({ chatroomId }) => {
   );
 };
 
-const ChatRoom = () => {
+const ChatRoom = ({customerId, merchantId}) => {
   const [selectedChatroomId, setSelectedChatroomId] = useState(1);
   const [chatRooms, setChatRooms] = useState([]);
   
   const handleSelectChatroom = (chatroomId) => {
-    console.log('selected old '+selectedChatroomId);
     setSelectedChatroomId(chatroomId);
   };
 

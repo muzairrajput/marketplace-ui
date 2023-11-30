@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ChatRoom.css';
+import { useLocation } from 'react-router-dom';
 
 const Message = ({message}) => {
     return (
@@ -17,7 +18,9 @@ const ChatroomDetail = ({ chatroomId }) => {
     e.preventDefault();
     console.log(`chatroomId: ${chatroomId} message: ${messageContent}`);
     var url = `https://souq-marketplace-api.onrender.com/message`;
-    axios.post(url, {chatroomId: {chatroomId}, senderId: 1, content: messageContent, timesent: new Date().toUTCString()})
+    var requestModel = {chatroomId: chatroomId, senderId: 1, content: messageContent, timesent: new Date().toUTCString()};
+    console.log(requestModel);
+    axios.post(url, requestModel)
         .then(response => {
         })
         .catch(error => {
@@ -56,7 +59,12 @@ const ChatroomDetail = ({ chatroomId }) => {
   );
 };
 
-const ChatRoom = ({customerId, merchantId}) => {
+const ChatRoom = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const customerId = queryParams.get('customerId');
+  const merchantId = queryParams.get('merchantId');
+
   const [selectedChatroomId, setSelectedChatroomId] = useState(1);
   const [chatRooms, setChatRooms] = useState([]);
   
@@ -66,13 +74,16 @@ const ChatRoom = ({customerId, merchantId}) => {
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    axios.get('https://souq-marketplace-api.onrender.com/chatroom')
+    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}`)
         .then(response => {
+          console.log('chatroom data');
+          console.log(response.data);
           setChatRooms(response.data);
         })
         .catch(error => {
           console.error('There was an error!', error);
         });
+        
   }, []);
   
   return (

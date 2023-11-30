@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Checkout = ({customerId}) => {
+const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
+    const navigate = useNavigate();
     const [checkoutItems, setCheckoutItems] = useState([]);
     const [merchantId, setMerchantId] = useState(0);
     useEffect(() => {
+        const isEmptyObject = Object.keys(loggedInUser).length === 0;
+        if (isEmptyObject) {
+            navigate('/login');
+        }
+        setCheckoutItems(cartItems);
+        const cartItemsDup = [...cartItems];
         // GET request using axios inside useEffect React hook
-        axios.get(`https://souq-marketplace-api.onrender.com/shoppingcart/1`)
+        const url = `https://souq-marketplace-api.onrender.com/shoppingcart`;
+        cartItemsDup.forEach((cartItem) => {
+            cartItem.CustomerID = loggedInUser.Customer_ID;
+            axios.post(url, cartItem)
             .then(response => {
-                setCheckoutItems(response.data);
-                axios.get(`https://souq-marketplace-api.onrender.com/product/${response.data[0].ProductID}`)
-                .then(response => {
-                    setMerchantId(response.data[0].Vendor_ID);
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
+                console.log('Succesfully added to cart');
             })
             .catch(error => {
-              console.error('There was an error!', error);
+                console.error('There was an error adding to shopping cart', error);
             });
-        
-      }, [customerId]);
+        });
+       
+      }, []);
       const calcOrderTotal = () => {
         var total = 0;
         checkoutItems.forEach((ci) => {
-            total += parseInt(ci.Quantity * ci.UnitPrice);
+            total += parseFloat(ci.Quantity * ci.UnitPrice);
         });
         return total;
       }
@@ -114,7 +118,16 @@ const Checkout = ({customerId}) => {
                                             </tr>
                                             <tr>
                                                 <td colSpan={3}>
-                                                    <Link to={{ pathname: '/chatroom', state: { customerId, merchantId } }}>Chat With Merchant</Link>                                                            
+                                                    <button onClick={() => {
+                                                            const queryParams = new URLSearchParams();
+                                                            console.log('navigate');
+                                                            console.log(cartItems[0])
+                                                            queryParams.append('customerId', loggedInUser.CustomerID);
+                                                            queryParams.append('merchantId', cartItems[0].Vendor_ID);
+                                                            navigate(`/chatroom?${queryParams.toString()}`);
+                                                        }}>
+                                                        Chat With Merchant
+                                                    </button>                                                            
                                                 </td>
                                             </tr>
                                         </tfoot>

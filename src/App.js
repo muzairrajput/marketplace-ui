@@ -10,43 +10,52 @@ import './App.css';
 import ShoppingCart from './components/ShoppingCart';
 import { useState } from 'react';
 import axios from 'axios';
+import MerchantLogin from './components/Merchants/Login';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState({});
   
+  const handleLoggedInUser = (user) => {
+    setLoggedInUser(user);
+  }
+
   const addCartItem = (cartItem) => {
-    cartItems.push(cartItem);
-    setCartItems(cartItems);
-    const url = `https://souq-marketplace-api.onrender.com/shoppingcart`;
-    cartItem.CustomerID = 1;
-    axios.post(url, cartItem)
-    .then(response => {
-        console.log('Succesfully added to cart');
-    })
-    .catch(error => {
-        console.error('There was an error adding to shopping cart', error);
-    });
-    console.log(cartItems.length);
+    const cloneCartItems = [...cartItems];
+    cloneCartItems.push(cartItem);
+    console.log(cartItem);
+    setCartItems(cloneCartItems);
+    return true;
+    // const url = `https://souq-marketplace-api.onrender.com/shoppingcart`;
+    // cartItem.CustomerID = 1;
+    // axios.post(url, cartItem)
+    // .then(response => {
+    //     console.log('Succesfully added to cart');
+    // })
+    // .catch(error => {
+    //     console.error('There was an error adding to shopping cart', error);
+    // });
   };
 
   const deleteCartItem = (cartItem) => {
     var item = cartItems.filter(ci => ci.id == cartItem.id);
+    const cloneCartItems = [...cartItems];
   };
 
   return (
     <>
-    <Navbar cartItems={cartItems} />
     <Router>
+      <Navbar loggedInUser={loggedInUser} cartItems={cartItems} />
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home cartItems={cartItems} addCartItem={addCartItem} />} />
           <Route path="/chatroom" element={<ChatRoom />} />
           <Route path="/shop" element={<Shop cartItems={cartItems} addCartItem={addCartItem} />} />
           <Route path="/productdetail" element={<ProductDetail />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login handleLoggedInUser={handleLoggedInUser} />} />
+          <Route path="/merchant/login" element={<MerchantLogin handleLoggedInUser={handleLoggedInUser} />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
-          <Route path="/checkout" element={<Checkout customerId={loggedInUser.User_Id} />} />
+          <Route path="/checkout" element={<Checkout loggedInUser={loggedInUser} cartItems={cartItems} addCartItem={addCartItem} />} />
         </Routes>
       </div>
     </Router>

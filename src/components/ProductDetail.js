@@ -1,7 +1,6 @@
 import React from 'react';
 
-class Shop extends React.Component{
-    render(){
+const ProductDetail = () => {
         return (
         <div>
         <div className="body-wrapper">
@@ -810,21 +809,6 @@ class Shop extends React.Component{
                                             <div className="lg-image">
                                                 <img src="assets/images/product/large-size/1.jpg" alt="product image"/>
                                             </div>
-                                            <div className="lg-image">
-                                                <img src="assets/images/product/large-size/2.jpg" alt="product image"/>
-                                            </div>
-                                            <div className="lg-image">
-                                                <img src="assets/images/product/large-size/3.jpg" alt="product image"/>
-                                            </div>
-                                            <div className="lg-image">
-                                                <img src="assets/images/product/large-size/4.jpg" alt="product image"/>
-                                            </div>
-                                            <div className="lg-image">
-                                                <img src="assets/images/product/large-size/5.jpg" alt="product image"/>
-                                            </div>
-                                            <div className="lg-image">
-                                                <img src="assets/images/product/large-size/6.jpg" alt="product image"/>
-                                            </div>
                                         </div>
                                         <div className="product-details-thumbs slider-thumbs-1">
                                             <div className="sm-image"><img src="assets/images/product/small-size/1.jpg" alt="product image thumb"/></div>
@@ -908,11 +892,7 @@ class Shop extends React.Component{
             {/* <!-- Quick View | Modal Area End Here --> */}
         </div>
         </div>
-        
-
-  
         )
-    }
 }
 
-export default Shop;
+export default ProductDetail;

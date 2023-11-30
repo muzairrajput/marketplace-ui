@@ -21,7 +21,7 @@ const Login = ({handleLoggedInUser}) => {
                         handleLoggedInUser(userData);
                     })
                     .catch(e => console.log(e));
-                    navigate(-1);
+                    navigate('/');
                 } else {
                     console.log("error");
                     setErrorMessage('Invalid username or password. Please try again.');

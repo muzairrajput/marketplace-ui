@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation  } from 'react-router-dom';
 import Home from './components/Home';
 import ChatRoom from './components/ChatRoom';
 import Shop from './components/Shop';
@@ -26,15 +26,6 @@ function App() {
     console.log(cartItem);
     setCartItems(cloneCartItems);
     return true;
-    // const url = `https://souq-marketplace-api.onrender.com/shoppingcart`;
-    // cartItem.CustomerID = 1;
-    // axios.post(url, cartItem)
-    // .then(response => {
-    //     console.log('Succesfully added to cart');
-    // })
-    // .catch(error => {
-    //     console.error('There was an error adding to shopping cart', error);
-    // });
   };
 
   const deleteCartItem = (cartItem) => {

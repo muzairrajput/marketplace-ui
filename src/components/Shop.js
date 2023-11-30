@@ -25,6 +25,35 @@ const Shop = ({addCartItem}) => {
             });
       }, [category]);
 
+      const handleSortSelectChange = (e) => {
+        console.log(e.target.value);
+        let sortBy = 'Name', order = 'ASC';
+        if (e.target.value == 'nameasc') {
+            sortBy = 'Name';
+            order = 'ASC';
+        }
+        else if (e.target.value == 'namedesc') {
+            sortBy = 'Name';
+            order = 'DESC';
+        }
+        else if (e.target.value == 'pricedesc') {
+            sortBy = 'Price';
+            order = 'DESC';
+        }
+        else if (e.target.value == 'priceasc') {
+            sortBy = 'Price';
+            order = 'ASC';
+        }
+        const url = `https://souq-marketplace-api.onrender.com/product?category=${category}`;
+        const endpoint = url+`&sortBy=${sortBy}&order=${order}`;
+        axios.get(endpoint)
+            .then(response => {
+                setProducts(response.data);
+            })
+            .catch(error => {
+              console.error('There was an error!', error);
+            });
+      };
     return (
         <div>
             <div className="body-wrapper">
@@ -48,10 +77,11 @@ const Shop = ({addCartItem}) => {
                                 <div className="product-select-box">
                                     <div className="product-short">
                                         <p>Sort By:</p>
-                                        <select className="nice-select">
-                                            <option value="sales">Name (A - Z)</option>
-                                            <option value="sales">Name (Z - A)</option>
-                                            <option value="rating">Price (Low &gt; High)</option>
+                                        <select className="nice-select" onChange={(v) => handleSortSelectChange(v)}>
+                                            <option value="nameasc">Name (A - Z)</option>
+                                            <option value="namedesc">Name (Z - A)</option>
+                                            <option value="pricedesc">Price (High &gt; Low)</option>
+                                            <option value="priceasc">Price (Low &gt; High)</option>
                                         </select>
                                     </div>
                                 </div>

@@ -5,28 +5,15 @@ import { Link, useNavigate } from 'react-router-dom';
 const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
     const navigate = useNavigate();
     const [checkoutItems, setCheckoutItems] = useState([]);
-    const [merchantId, setMerchantId] = useState(0);
+
     useEffect(() => {
         const isEmptyObject = Object.keys(loggedInUser).length === 0;
         if (isEmptyObject) {
             navigate('/login');
         }
         setCheckoutItems(cartItems);
-        const cartItemsDup = [...cartItems];
-        // GET request using axios inside useEffect React hook
-        const url = `https://souq-marketplace-api.onrender.com/shoppingcart`;
-        cartItemsDup.forEach((cartItem) => {
-            cartItem.CustomerID = loggedInUser.Customer_ID;
-            axios.post(url, cartItem)
-            .then(response => {
-                console.log('Succesfully added to cart');
-            })
-            .catch(error => {
-                console.error('There was an error adding to shopping cart', error);
-            });
-        });
-       
-      }, []);
+      }, [cartItems]);
+
       const calcOrderTotal = () => {
         var total = 0;
         checkoutItems.forEach((ci) => {
@@ -36,6 +23,54 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
       }
       const orderTotal = calcOrderTotal();
       
+      const handleUpdateItems = (val, productId) => {
+        if (val < 0) return;
+        const cartItemsDup = [...cartItems];
+        cartItemsDup.forEach((cartItem) => {
+            if (cartItem.ProductID == productId) {
+                cartItem.Quantity = val;
+            }
+        });
+        setCheckoutItems(cartItemsDup);
+      }
+
+      const handleChatroomNavigate = ()  => {
+
+        const cartItemsDup = [...cartItems];     
+        // GET request using axios inside useEffect React hook
+        const url = `https://souq-marketplace-api.onrender.com/order`;
+        var orderRequest = {
+            Customer_ID: loggedInUser.Customer_ID,
+            OrderDate : new Date().toISOString().slice(0, 19).replace('T', ' ')
+        };
+        let totalPrice = 0;
+        let orderItems = [];
+        cartItemsDup.forEach((cartItem) => {
+            cartItem.CustomerID = loggedInUser.Customer_ID;
+            if (cartItem.Quantity > 0) {
+                totalPrice += cartItem.UnitPrice;
+                orderItems.push({
+                    ProductId: cartItem.ProductID,
+                    UnitPrice: cartItem.UnitPrice,
+                    Quantity: cartItem.Quantity
+                });
+            }
+        });
+        orderRequest["TotalAmount"] = totalPrice;
+        orderRequest["OrderItems"] = orderItems;
+        axios.post(url, orderRequest)
+        .then(response => {
+            console.log('Succesfully added to cart');
+            const queryParams = new URLSearchParams();
+            queryParams.append('customerId', loggedInUser.Customer_ID);
+            queryParams.append('merchantId', cartItems[0].VendorID);
+            queryParams.append('orderId', response.data.OrderId);
+            navigate(`/chatroom?${queryParams.toString()}`);
+        })
+        .catch(error => {
+            console.error('There was an error adding to shopping cart', error);
+        });
+      }
     return (
         <div>
            
@@ -91,7 +126,7 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                     <div class="row">
                         <div class="col-lg-12 col-12">
                             <div class="your-order">
-                                <h3>Your order</h3>
+                                <h3>Your order:</h3>
                                 <div class="your-order-table table-responsive">
                                     <table class="table">
                                         <thead>
@@ -103,10 +138,10 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                                         </thead>
                                         <tbody>
                                             {checkoutItems.map((ci) => (
-                                                <tr class="cart_item">
-                                                    <td class="cart-product-name">{ci.ProductName} <strong class="product-quantity"> × {ci.Quantity}</strong></td>
+                                                <tr class="cart_item" key={ci.ProductID}>
+                                                    <td class="cart-product-name">{ci.ProductName} x <input style={{width: '50px', background: 'white'}} type='number' name='itemQty' value={ci.Quantity} onChange={(e) => handleUpdateItems(e.target.value, ci.ProductID)}/> </td>
                                                     <td class="cart-product-total"><span class="amount">${ci.UnitPrice}</span></td>  
-                                                    <td class="cart-product-total"><span class="amount">${ci.UnitPrice * ci.Quantity}</span></td>  
+                                                    <td class="cart-product-total"><span class="amount">${ci.UnitPrice * ci.Quantity}</span></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -117,16 +152,13 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                                                 <td><strong><span class="amount">${orderTotal}</span></strong></td>
                                             </tr>
                                             <tr>
-                                                <td colSpan={3}>
-                                                    <button onClick={() => {
-                                                            const queryParams = new URLSearchParams();
-                                                            queryParams.append('customerId', loggedInUser.Customer_ID);
-                                                            queryParams.append('merchantId', cartItems[0].VendorID);
-                                                            navigate(`/chatroom?${queryParams.toString()}`);
-                                                        }}>
+                                                {checkoutItems.length > 0 && (
+                                                    <td colSpan={3}>
+                                                    <button onClick={() => handleChatroomNavigate()}>
                                                         Chat With Merchant
                                                     </button>                                                            
-                                                </td>
+                                                    </td>
+                                                )}
                                             </tr>
                                         </tfoot>
                                     </table>

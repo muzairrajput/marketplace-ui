@@ -8,10 +8,9 @@ const Home = ({cartItems, addCartItem}) => {
   const addToCart = (cartItem) => {
       addCartItem(cartItem);
   };
-
+  const url = `https://souq-marketplace-api.onrender.com/product`;
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    const url = `https://souq-marketplace-api.onrender.com/product`;
     axios.get(url)
         .then(response => {
             setProducts(response.data);
@@ -20,6 +19,36 @@ const Home = ({cartItems, addCartItem}) => {
           console.error('There was an error!', error);
         });
   }, []);
+
+  const handleSortSelectChange = (e) => {
+    console.log(e.target.value);
+    let sortBy = 'Name', order = 'ASC';
+    if (e.target.value == 'nameasc') {
+        sortBy = 'Name';
+        order = 'ASC';
+    }
+    else if (e.target.value == 'namedesc') {
+        sortBy = 'Name';
+        order = 'DESC';
+    }
+    else if (e.target.value == 'pricedesc') {
+        sortBy = 'Price';
+        order = 'DESC';
+    }
+    else if (e.target.value == 'priceasc') {
+        sortBy = 'Price';
+        order = 'ASC';
+    }
+    const endpoint = url+`?sortBy=${sortBy}&order=${order}`;
+    axios.get(endpoint)
+        .then(response => {
+            setProducts(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+  };
+
   return (
     <div>
             <div className="body-wrapper">
@@ -42,10 +71,11 @@ const Home = ({cartItems, addCartItem}) => {
                                 <div className="product-select-box">
                                     <div className="product-short">
                                         <p>Sort By:</p>
-                                        <select className="nice-select">
-                                            <option value="sales">Name (A - Z)</option>
-                                            <option value="sales">Name (Z - A)</option>
-                                            <option value="rating">Price (Low &gt; High)</option>
+                                        <select className="nice-select" onChange={(v) => handleSortSelectChange(v)}>
+                                            <option value="nameasc">Name (A - Z)</option>
+                                            <option value="namedesc">Name (Z - A)</option>
+                                            <option value="pricedesc">Price (High &gt; Low)</option>
+                                            <option value="priceasc">Price (Low &gt; High)</option>
                                         </select>
                                     </div>
                                 </div>

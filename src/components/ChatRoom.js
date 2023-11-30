@@ -12,9 +12,13 @@ const Message = ({message}) => {
 };
 
 const ChatroomDetail = ({ chatroomId }) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get('orderId');
   const [selectedChatRoomMessages, setSelectedChatRoomMessages] = useState([]);
   const handleInsertMessage = (e) => {
     e.preventDefault();
+    if (e.target.elements[0].value === '') return;
     var url = `https://souq-marketplace-api.onrender.com/message`;
     var requestModel = {chatroomId: chatroomId, senderId: 1, content: e.target.elements[0].value};
     axios.post(url, requestModel)
@@ -44,9 +48,26 @@ const ChatroomDetail = ({ chatroomId }) => {
     };
     
   }, [chatroomId]);
+
+  const handleCloseChat = () => {
+    console.log('ChatId: '+chatroomId);
+    var url = `https://souq-marketplace-api.onrender.com/chatroom/${chatroomId}`;
+      axios.put(url)
+          .then(response => {
+            setSelectedChatRoomMessages(response.data);
+          })
+          .catch(error => {
+            console.error('There was an error getting messages', error);
+          });
+      
+  };
+
   return (
     <div style={{ flex: 4, backgroundColor: '#fff', padding: '20px' }}>
-        <h1>ChatRoom</h1>
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <h1 style={{marginRight: 'auto'}}>ChatRoom for Order Id: {orderId}</h1>
+          <button style={{marginLeft: 'auto'}} className="register-button mt-0" onClick={() => handleCloseChat()}>Close Chat</button>
+        </div>
         <div style={{ overflowY: 'scroll', height: 'calc(100vh - 200px)' }}>
             {selectedChatRoomMessages.map((msg) => (
                 <Message message={msg} />
@@ -88,7 +109,6 @@ const ChatRoom = () => {
             .then(resp => {
               axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}&merchantId=${merchantId}`)
               .then(response => {
-                console.log('Again create fetch')
                 setChatRooms(response.data);
               })
               .catch(error => {

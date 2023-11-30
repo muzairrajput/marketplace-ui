@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({loggedInUser, cartItems}) => {
-
+    const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
         // This code will run whenever the count prop changes
@@ -26,69 +26,72 @@ const Navbar = ({loggedInUser, cartItems}) => {
                         </div>
                         {/* <!-- Header Logo Area End Here --> */}
                         {/* <!-- Begin Header Middle Right Area --> */}
-                        <div className="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
-                            {/* <!-- Begin Header Middle Searchbox Area --> */}
-                            <form action="#" className="hm-searchbox">
-                                <input type="text" placeholder="Enter your search key ..."/>
-                                <button className="li-btn" type="submit"><i className="fa fa-search"></i></button>
-                            </form>
-                            {/* <!-- Header Middle Searchbox Area End Here --> */}
-                            {/* <!-- Begin Header Middle Right Area --> */}
-                            <div className="header-middle-right">
-                                <ul className="hm-menu">
-                                    {/* <!-- Begin Header Mini Cart Area --> */}
-                                    <li className="hm-minicart">
-                                        <div className="hm-minicart-trigger">
-                                            <span className="item-icon"></span>
-                                            <span className="item-text">
-                                                <span className="cart-item-count">{cartItems.length}</span>
-                                            </span>
-                                        </div>
-                                        <span>{loggedInUser.Email}</span>
-                                        <span></span>
-                                        <div className="minicart">
-                                            <ul className="minicart-product-list">
-                                                <li>
-                                                    <a href="assets/single-product.html" className="minicart-product-image">
-                                                        <img src="assets/images/product/small-size/5.jpg" alt="cart products"/>
-                                                    </a>
-                                                    <div className="minicart-product-details">
-                                                        <h6><a href="assets/single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
-                                                    </div>
-                                                    <button className="close" title="Remove">
-                                                        <i className="fa fa-close"></i>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <a href="assets/single-product.html" className="minicart-product-image">
-                                                        <img src="assets/images/product/small-size/6.jpg" alt="cart products"/>
-                                                    </a>
-                                                    <div className="minicart-product-details">
-                                                        <h6><a href="assets/single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
-                                                    </div>
-                                                    <button className="close" title="Remove">
-                                                        <i className="fa fa-close"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                            <p className="minicart-total">SUBTOTAL: <span>£80.00</span></p>
-                                            <div className="minicart-button">
-                                                <a href="assets/shopping-cart.html" className="li-button li-button-fullwidth li-button-dark">
-                                                    <span>View Full Cart</span>
-                                                </a>
-                                                <a href="assets/checkout.html" className="li-button li-button-fullwidth">
-                                                    <span>Checkout</span>
-                                                </a>
+                        {!location.pathname.includes('/chatroom') && !location.pathname.includes('/checkout') && (
+                            <div className="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
+                                {/* <!-- Begin Header Middle Searchbox Area --> */}
+                                <form action="#" className="hm-searchbox">
+                                    <input type="text" placeholder="Enter your search key ..."/>
+                                    <button className="li-btn" type="submit"><i className="fa fa-search"></i></button>
+                                </form>
+                                {/* <!-- Header Middle Searchbox Area End Here --> */}
+                                {/* <!-- Begin Header Middle Right Area --> */}
+                                <div className="header-middle-right">
+                                    <ul className="hm-menu">
+                                        {/* <!-- Begin Header Mini Cart Area --> */}
+                                        <li className="hm-minicart">
+                                            <div className="hm-minicart-trigger">
+                                                <span className="item-icon"></span>
+                                                <span className="item-text">
+                                                    <span className="cart-item-count">{cartItems.length}</span>
+                                                </span>
                                             </div>
-                                        </div>
-                                    </li>
-                                    {/* <!-- Header Mini Cart Area End Here --> */}
-                                </ul>
+                                            <span>{loggedInUser.Email}</span>
+                                            <span></span>
+                                            <div className="minicart">
+                                                <ul className="minicart-product-list">
+                                                    <li>
+                                                        <a href="assets/single-product.html" className="minicart-product-image">
+                                                            <img src="assets/images/product/small-size/5.jpg" alt="cart products"/>
+                                                        </a>
+                                                        <div className="minicart-product-details">
+                                                            <h6><a href="assets/single-product.html">Aenean eu tristique</a></h6>
+                                                            <span>£40 x 1</span>
+                                                        </div>
+                                                        <button className="close" title="Remove">
+                                                            <i className="fa fa-close"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <a href="assets/single-product.html" className="minicart-product-image">
+                                                            <img src="assets/images/product/small-size/6.jpg" alt="cart products"/>
+                                                        </a>
+                                                        <div className="minicart-product-details">
+                                                            <h6><a href="assets/single-product.html">Aenean eu tristique</a></h6>
+                                                            <span>£40 x 1</span>
+                                                        </div>
+                                                        <button className="close" title="Remove">
+                                                            <i className="fa fa-close"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                                <p className="minicart-total">SUBTOTAL: <span>£80.00</span></p>
+                                                <div className="minicart-button">
+                                                    <a href="assets/shopping-cart.html" className="li-button li-button-fullwidth li-button-dark">
+                                                        <span>View Full Cart</span>
+                                                    </a>
+                                                    <a href="assets/checkout.html" className="li-button li-button-fullwidth">
+                                                        <span>Checkout</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/* <!-- Header Mini Cart Area End Here --> */}
+                                    </ul>
+                                </div>
+                                {/* <!-- Header Middle Right Area End Here --> */}
                             </div>
-                            {/* <!-- Header Middle Right Area End Here --> */}
-                        </div>
+                        )}
+                        
                         {/* <!-- Header Middle Right Area End Here --> */}
                     </div>
                 </div>

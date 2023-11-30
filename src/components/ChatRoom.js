@@ -16,12 +16,12 @@ const ChatroomDetail = ({ chatroomId }) => {
   const [messageContent, setMessageContent] = useState("");
   const handleInsertMessage = (e) => {
     e.preventDefault();
-    console.log(`chatroomId: ${chatroomId} message: ${messageContent}`);
     var url = `https://souq-marketplace-api.onrender.com/message`;
-    var requestModel = {chatroomId: chatroomId, senderId: 1, content: messageContent, timesent: new Date().toUTCString()};
+    var requestModel = {chatroomId: chatroomId, senderId: 1, content: e.target.elements[0].value};
     console.log(requestModel);
     axios.post(url, requestModel)
         .then(response => {
+          console.log(response);
         })
         .catch(error => {
           console.error('There was an error inserted messags', error);
@@ -50,10 +50,10 @@ const ChatroomDetail = ({ chatroomId }) => {
                 <Message message={msg} />
             ))}
         </div>
-        <form style={{ display: 'flex' }}>
-          <input type="text" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} 
+        <form style={{ display: 'flex' }} onSubmit={handleInsertMessage}>
+          <input type="text" name="message" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} 
                 onChange={e => setMessageContent(e.target.value)}/>
-          <button style={{ padding: '10px' }} onClick={(e) => handleInsertMessage(e)}>Send</button>
+          <button className="register-button mt-0">Send</button>
         </form>
       </div>
   );
@@ -74,11 +74,30 @@ const ChatRoom = () => {
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}`)
+    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}&merchantId=${merchantId}`)
         .then(response => {
-          console.log('chatroom data');
-          console.log(response.data);
-          setChatRooms(response.data);
+          if (response.data.length > 0)
+            setChatRooms(response.data);
+          else {
+            var chatRoomRequest = {
+              Customer_ID: customerId, 
+              Merchant_ID : merchantId
+            };
+            axios.post(`https://souq-marketplace-api.onrender.com/chatroom`, chatRoomRequest)
+            .then(resp => {
+              axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}&merchantId=${merchantId}`)
+              .then(response => {
+                console.log('Again create fetch')
+                setChatRooms(response.data);
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
+            })
+            .catch(error => {
+              console.error('There was an error creating chatroom', error);
+            });
+          }
         })
         .catch(error => {
           console.error('There was an error!', error);

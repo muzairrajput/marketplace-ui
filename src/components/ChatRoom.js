@@ -13,12 +13,10 @@ const Message = ({message}) => {
 
 const ChatroomDetail = ({ chatroomId }) => {
   const [selectedChatRoomMessages, setSelectedChatRoomMessages] = useState([]);
-  const [messageContent, setMessageContent] = useState("");
   const handleInsertMessage = (e) => {
     e.preventDefault();
     var url = `https://souq-marketplace-api.onrender.com/message`;
     var requestModel = {chatroomId: chatroomId, senderId: 1, content: e.target.elements[0].value};
-    console.log(requestModel);
     axios.post(url, requestModel)
         .then(response => {
           console.log(response);
@@ -26,21 +24,25 @@ const ChatroomDetail = ({ chatroomId }) => {
         .catch(error => {
           console.error('There was an error inserted messags', error);
         });
-        setMessageContent("");
+    e.target.elements[0].value = '';
   }
 
   useEffect(() => {
-    // GET request using axios inside useEffect React hook
-    var url = `https://souq-marketplace-api.onrender.com/message/${chatroomId}`;
-    axios.get(url)
-        .then(response => {
-          console.log('Messages');
-          console.log(response.data);
-          setSelectedChatRoomMessages(response.data);
-        })
-        .catch(error => {
-          console.error('There was an error getting messages', error);
-        });
+    const intervalId = setInterval(() => {
+      var url = `https://souq-marketplace-api.onrender.com/message/${chatroomId}`;
+      axios.get(url)
+          .then(response => {
+            setSelectedChatRoomMessages(response.data);
+          })
+          .catch(error => {
+            console.error('There was an error getting messages', error);
+          });
+    }, 3000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+    
   }, [chatroomId]);
   return (
     <div style={{ flex: 4, backgroundColor: '#fff', padding: '20px' }}>
@@ -51,8 +53,7 @@ const ChatroomDetail = ({ chatroomId }) => {
             ))}
         </div>
         <form style={{ display: 'flex' }} onSubmit={handleInsertMessage}>
-          <input type="text" name="message" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} 
-                onChange={e => setMessageContent(e.target.value)}/>
+          <input type="text" name="message" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} />
           <button className="register-button mt-0">Send</button>
         </form>
       </div>

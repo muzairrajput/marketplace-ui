@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ChatRoom.css';
+import { useLocation } from 'react-router-dom';
 
 const Message = ({message}) => {
     return (
@@ -15,10 +16,12 @@ const ChatroomDetail = ({ chatroomId }) => {
   const [messageContent, setMessageContent] = useState("");
   const handleInsertMessage = (e) => {
     e.preventDefault();
-    console.log(`chatroomId: ${chatroomId} message: ${messageContent}`);
-    var url = `https://souq-marketplace-api.onrender.com/message`;
-    axios.post(url, {chatroomId: {chatroomId}, senderId: 1, content: messageContent, timesent: new Date().toUTCString()})
+    var url = `http://localhost:8083/message`;
+    var requestModel = {chatroomId: chatroomId, senderId: 1, content: e.target.elements[0].value};
+    console.log(requestModel);
+    axios.post(url, requestModel)
         .then(response => {
+          console.log(response);
         })
         .catch(error => {
           console.error('There was an error inserted messags', error);
@@ -47,16 +50,21 @@ const ChatroomDetail = ({ chatroomId }) => {
                 <Message message={msg} />
             ))}
         </div>
-        <form style={{ display: 'flex' }}>
-          <input type="text" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} 
+        <form style={{ display: 'flex' }} onSubmit={handleInsertMessage}>
+          <input type="text" name="message" placeholder="Type a message..." style={{ flex: 1, padding: '10px' }} 
                 onChange={e => setMessageContent(e.target.value)}/>
-          <button style={{ padding: '10px' }} onClick={(e) => handleInsertMessage(e)}>Send</button>
+          <button className="register-button mt-0">Send</button>
         </form>
       </div>
   );
 };
 
-const ChatRoom = ({customerId, merchantId}) => {
+const ChatRoom = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const customerId = queryParams.get('customerId');
+  const merchantId = queryParams.get('merchantId');
+
   const [selectedChatroomId, setSelectedChatroomId] = useState(1);
   const [chatRooms, setChatRooms] = useState([]);
   
@@ -66,13 +74,35 @@ const ChatRoom = ({customerId, merchantId}) => {
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    axios.get('https://souq-marketplace-api.onrender.com/chatroom')
+    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}&merchantId=${merchantId}`)
         .then(response => {
-          setChatRooms(response.data);
+          if (response.data.length > 0)
+            setChatRooms(response.data);
+          else {
+            var chatRoomRequest = {
+              Customer_ID: customerId, 
+              Merchant_ID : merchantId
+            };
+            axios.post(`https://souq-marketplace-api.onrender.com/chatroom`, chatRoomRequest)
+            .then(resp => {
+              axios.get(`https://souq-marketplace-api.onrender.com/chatroom?customerId=${customerId}&merchantId=${merchantId}`)
+              .then(response => {
+                console.log('Again create fetch')
+                setChatRooms(response.data);
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
+            })
+            .catch(error => {
+              console.error('There was an error creating chatroom', error);
+            });
+          }
         })
         .catch(error => {
           console.error('There was an error!', error);
         });
+        
   }, []);
   
   return (

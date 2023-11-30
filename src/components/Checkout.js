@@ -104,7 +104,7 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                                         <tbody>
                                             {checkoutItems.map((ci) => (
                                                 <tr class="cart_item">
-                                                    <td class="cart-product-name">Test Product <strong class="product-quantity"> × {ci.Quantity}</strong></td>
+                                                    <td class="cart-product-name">{ci.ProductName} <strong class="product-quantity"> × {ci.Quantity}</strong></td>
                                                     <td class="cart-product-total"><span class="amount">${ci.UnitPrice}</span></td>  
                                                     <td class="cart-product-total"><span class="amount">${ci.UnitPrice * ci.Quantity}</span></td>  
                                                 </tr>
@@ -120,10 +120,8 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                                                 <td colSpan={3}>
                                                     <button onClick={() => {
                                                             const queryParams = new URLSearchParams();
-                                                            console.log('navigate');
-                                                            console.log(cartItems[0])
-                                                            queryParams.append('customerId', loggedInUser.CustomerID);
-                                                            queryParams.append('merchantId', cartItems[0].Vendor_ID);
+                                                            queryParams.append('customerId', loggedInUser.Customer_ID);
+                                                            queryParams.append('merchantId', cartItems[0].VendorID);
                                                             navigate(`/chatroom?${queryParams.toString()}`);
                                                         }}>
                                                         Chat With Merchant

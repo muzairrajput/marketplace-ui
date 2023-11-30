@@ -67,7 +67,7 @@ const Shop = ({addCartItem}) => {
                                                     <div className="col-lg-4 col-md-4 col-sm-6 mt-40"> 
                                                         <div className="single-product-wrap">
                                                             <div className="product-image">
-                                                                <a href="/productDetail?productId=1">
+                                                                <a href={`/productDetail?productId=${p.ProductID}`}>
                                                                     <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
                                                                 </a>
                                                                 <span className="sticker"></span>
@@ -76,10 +76,10 @@ const Shop = ({addCartItem}) => {
                                                                 <div className="product_desc_info">
                                                                     <div className="product-review">
                                                                         <h5 className="manufacturer">
-                                                                            <a href="/productDetail?productId=1">Merchant {p.Name}</a>
+                                                                            <a href={`/productDetail?productId=${p.ProductID}`}>Merchant {p.Name}</a>
                                                                         </h5>
                                                                     </div>
-                                                                    <h4><a className="product_name" href="/productDetail?productId=1">{p.Name}</a></h4>
+                                                                    <h4><a className="product_name" href={`/productDetail?productId=${p.ProductID}`}>{p.Name}</a></h4>
                                                                     <div className="price-box">
                                                                         <span className="new-price">${p.Price}</span>
                                                                     </div>

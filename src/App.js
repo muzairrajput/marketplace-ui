@@ -11,6 +11,7 @@ import ShoppingCart from './components/ShoppingCart';
 import { useState } from 'react';
 import axios from 'axios';
 import MerchantLogin from './components/Merchants/Login';
+import OrderDetails from './components/OrderDetail';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/merchant/login" element={<MerchantLogin handleLoggedInUser={handleLoggedInUser} />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout loggedInUser={loggedInUser} cartItems={cartItems} addCartItem={addCartItem} />} />
+          <Route path="/orderDetails" element={<OrderDetails />} />
         </Routes>
       </div>
     </Router>

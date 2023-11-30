@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ChatRoom.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Message = ({message}) => {
     return (
@@ -12,6 +12,7 @@ const Message = ({message}) => {
 };
 
 const ChatroomDetail = ({ chatroomId }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get('orderId');
@@ -49,17 +50,35 @@ const ChatroomDetail = ({ chatroomId }) => {
     
   }, [chatroomId]);
 
-  const handleCloseChat = () => {
-    console.log('ChatId: '+chatroomId);
-    var url = `https://souq-marketplace-api.onrender.com/chatroom/${chatroomId}`;
-      axios.put(url)
-          .then(response => {
-            setSelectedChatRoomMessages(response.data);
-          })
-          .catch(error => {
-            console.error('There was an error getting messages', error);
-          });
-      
+  const handleCloseChat = () => { 
+    var url = `https://souq-marketplace-api.onrender.com/order/${orderId}`;
+    axios.get(url)
+        .then(response => {
+          var order = response.data[0];
+          if (order.Status === 'Approved') {
+            navigate(`/orderDetails?orderId=${orderId}`);
+          }
+          else if (order.Status === 'Pending') {
+            var url = `https://souq-marketplace-api.onrender.com/order/updateStatus/${orderId}`;
+            var reqObj = {
+              Status: 'Failed'
+            };
+            axios.put(url, reqObj)
+                .then(response => {
+                    console.log('Order marked failed');
+                })
+                .catch(error => {
+                  console.error('There was an error getting messages', error);
+                });
+            navigate(`/`);
+          }
+          else {
+            navigate(`/`);
+          }
+        })
+        .catch(error => {
+          console.error('There was an error getting messages', error);
+        });
   };
 
   return (

@@ -9,7 +9,7 @@ const Shop = ({addCartItem}) => {
 
     const [products, setProducts] = useState([]);
     const addToCart = (cartItem) => {
-        addCartItem(cartItem);
+        if(!addCartItem(cartItem)) return alert('Cannot add item from another merchant');
     };
 
 
@@ -44,16 +44,7 @@ const Shop = ({addCartItem}) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-9 order-1 order-lg-2">
-                            <div className="shop-top-bar mt-30">
-                                <div className="shop-bar-inner">
-                                    <div className="product-view-mode">
-                                        <ul className="nav shop-item-filter-list" role="tablist">
-                                            <li className="active" role="presentation"><a aria-selected="true" className="active show" data-toggle="tab" role="tab" aria-controls="grid-view" href="#grid-view"><i className="fa fa-th"></i></a></li>
-                                            <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i className="fa fa-th-list"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                       
+                            <div className="shop-top-bar mt-30">                      
                                 <div className="product-select-box">
                                     <div className="product-short">
                                         <p>Sort By:</p>
@@ -61,7 +52,6 @@ const Shop = ({addCartItem}) => {
                                             <option value="sales">Name (A - Z)</option>
                                             <option value="sales">Name (Z - A)</option>
                                             <option value="rating">Price (Low &gt; High)</option>
-                                            <option value="date">Rating (Lowest)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -77,7 +67,7 @@ const Shop = ({addCartItem}) => {
                                                     <div className="col-lg-4 col-md-4 col-sm-6 mt-40"> 
                                                         <div className="single-product-wrap">
                                                             <div className="product-image">
-                                                                <a href="single-product.html">
+                                                                <a href={`/productDetail?productId=${p.ProductID}`}>
                                                                     <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
                                                                 </a>
                                                                 <span className="sticker"></span>
@@ -86,10 +76,10 @@ const Shop = ({addCartItem}) => {
                                                                 <div className="product_desc_info">
                                                                     <div className="product-review">
                                                                         <h5 className="manufacturer">
-                                                                            <a href="product-details.html">Merchant {p.Name}</a>
+                                                                            <a href={`/productDetail?productId=${p.ProductID}`}>Merchant {p.Name}</a>
                                                                         </h5>
                                                                     </div>
-                                                                    <h4><a className="product_name" href="single-product.html">{p.Name}</a></h4>
+                                                                    <h4><a className="product_name" href={`/productDetail?productId=${p.ProductID}`}>{p.Name}</a></h4>
                                                                     <div className="price-box">
                                                                         <span className="new-price">${p.Price}</span>
                                                                     </div>
@@ -102,6 +92,8 @@ const Shop = ({addCartItem}) => {
                                                                                 cartItem["CustomerID"] = p.CustomerID;
                                                                                 cartItem["Quantity"] = 1;
                                                                                 cartItem["UnitPrice"] = p.Price;
+                                                                                cartItem["ProductName"] = p.Name;
+                                                                                cartItem["VendorID"] = p.Vendor_ID;
                                                                                 addToCart(cartItem);
                                                                             }}>
                                                                             Add to Cart
@@ -112,25 +104,6 @@ const Shop = ({addCartItem}) => {
                                                         </div>
                                                     </div>        
                                                 ))};
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="paginatoin-area">
-                                        <div className="row">
-                                            <div className="col-lg-6 col-md-6 pt-xs-15">
-                                                <p>Showing 1-12 of 13 item(s)</p>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <ul className="pagination-box pt-xs-20 pb-xs-15">
-                                                    <li><a href="/" className="Previous"><i className="fa fa-chevron-left"></i> Previous</a>
-                                                    </li>
-                                                    <li className="active"><a href="/">1</a></li>
-                                                    <li><a href="/">2</a></li>
-                                                    <li><a href="/">3</a></li>
-                                                    <li>
-                                                      <a href="/" className="Next"> Next <i className="fa fa-chevron-right"></i></a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </div>

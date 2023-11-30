@@ -16,7 +16,7 @@ const ChatroomDetail = ({ chatroomId }) => {
   const [messageContent, setMessageContent] = useState("");
   const handleInsertMessage = (e) => {
     e.preventDefault();
-    var url = `http://localhost:8083/message`;
+    var url = `https://souq-marketplace-api.onrender.com/message`;
     var requestModel = {chatroomId: chatroomId, senderId: 1, content: e.target.elements[0].value};
     console.log(requestModel);
     axios.post(url, requestModel)

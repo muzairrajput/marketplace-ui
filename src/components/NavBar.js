@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({cartItems}) => {
+const Navbar = ({loggedInUser, cartItems}) => {
 
+    const navigate = useNavigate();
     useEffect(() => {
         // This code will run whenever the count prop changes
         console.log('Count has changed:', cartItems.length);
@@ -42,6 +44,7 @@ const Navbar = ({cartItems}) => {
                                                 <span className="cart-item-count">{cartItems.length}</span>
                                             </span>
                                         </div>
+                                        <span>{loggedInUser.Email}</span>
                                         <span></span>
                                         <div className="minicart">
                                             <ul className="minicart-product-list">
@@ -112,8 +115,17 @@ const Navbar = ({cartItems}) => {
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="/Checkout">Checkout</a></li>
-                                        <li><a href="/Login">Login</a></li>
+                                        <li onClick={() => navigate("/checkout")}>Checkout</li>
+                                        <li className="catmenu-dropdown megamenu-holder"><a href="#">Login</a>
+                                            <ul className="megamenu hb-megamenu">
+                                                <li>
+                                                    <a href='/login'>Customer Login</a>
+                                                </li>
+                                                <li>
+                                                    <a href='/merchant/login'>Merchant Login</a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>

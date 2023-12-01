@@ -12,7 +12,6 @@ const OrderDetails = () => {
         axios.get(url)
               .then(response => {
                 setOrderItems(response.data);
-                getTotal();
               })
               .catch(error => {
                 console.error('There was an error getting messages', error);
@@ -21,7 +20,7 @@ const OrderDetails = () => {
 
       const calcOrderTotal = () => {
         var total = 0;
-        checkoutItems.forEach((ci) => {
+        orderItems.forEach((ci) => {
             total += parseFloat(ci.Quantity * ci.UnitPrice);
         });
         return total;

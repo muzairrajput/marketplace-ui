@@ -12,6 +12,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import MerchantLogin from './components/Merchants/Login';
 import OrderDetails from './components/OrderDetail';
+import AddProduct from './components/AddProduct';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -49,6 +50,7 @@ function App() {
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout loggedInUser={loggedInUser} cartItems={cartItems} addCartItem={addCartItem} />} />
           <Route path="/orderDetails" element={<OrderDetails />} />
+          <Route path="/addproduct" element={<AddProduct />} />
         </Routes>
       </div>
     </Router>

@@ -21,7 +21,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
                             handleLoggedInUser(userData);
                         })
                         .catch(e => console.log(e));
-                    navigate('/merchant/');
+                    navigate('/MerchantHome');
                 } else {
                     console.log("error");
                     setErrorMessage('Invalid username or password. Please try again.');

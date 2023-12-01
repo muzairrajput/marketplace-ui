@@ -12,6 +12,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import MerchantLogin from './components/MerchantLogin';
 import OrderDetails from './components/OrderDetail';
+import MerchantHome from './components/MerchantHome';
+import MerchantNavbar from './components/MerchantNavbar';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -32,10 +34,17 @@ function App() {
     setCartItems([]);
   };
 
+  const isMerchantHome = window.location.pathname === '/MerchantHome';
+
+
   return (
     <>
       <Router>
-        <Navbar loggedInUser={loggedInUser} cartItems={cartItems} />
+      {isMerchantHome ? (
+          <MerchantNavbar loggedInUser={loggedInUser} cartItems={cartItems} />
+        ) : (
+          <Navbar loggedInUser={loggedInUser} cartItems={cartItems} />
+        )}
         <div className="App">
           <Routes>
             <Route path="/" element={<Home cartItems={cartItems} addCartItem={addCartItem} />} />
@@ -47,6 +56,8 @@ function App() {
             <Route path="/shoppingcart" element={<ShoppingCart />} />
             <Route path="/checkout" element={<Checkout loggedInUser={loggedInUser} cartItems={cartItems} addCartItem={addCartItem} />} />
             <Route path="/orderDetails" element={<OrderDetails />} />
+            <Route path="/MerchantHome" element={<MerchantHome/>} />
+            <Route path="MerchantNavbar" element={<MerchantNavbar/>} />
           </Routes>
         </div>
       </Router>

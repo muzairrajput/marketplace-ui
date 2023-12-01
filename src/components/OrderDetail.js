@@ -6,7 +6,6 @@ const OrderDetails = () => {
     const queryParams = new URLSearchParams(location.search);
     const orderId = queryParams.get('orderId');
     const [orderItems, setOrderItems] = useState([]);
-    const [orderTotal, setOrderTotal] = useState(0);
 
     useEffect(() => {
         var url = `https://souq-marketplace-api.onrender.com/orderitem/${orderId}`;
@@ -20,13 +19,14 @@ const OrderDetails = () => {
               });
       }, []);
 
-    const getTotal = () => {
-        let total = 0;
-        orderItems.forEach((oi) => {
-            total += (oi.Quantity) * (oi.UnitPrice);
+      const calcOrderTotal = () => {
+        var total = 0;
+        checkoutItems.forEach((ci) => {
+            total += parseFloat(ci.Quantity * ci.UnitPrice);
         });
-        setOrderTotal(total);
-    }
+        return total;
+      }
+      const orderTotal = calcOrderTotal();
     return (
         <div>
             <div class="col-lg-12 col-12">
@@ -53,7 +53,8 @@ const OrderDetails = () => {
                             <tfoot>
                                 <tr class="order-total">
                                     <th>Order Total</th>
-                                    <td colSpan={2}><strong><span class="amount">${orderTotal}</span></strong></td>
+                                    <td><strong><span class="amount"></span></strong></td>
+                                    <td><strong><span class="amount">${orderTotal}</span></strong></td>
                                 </tr>
                             </tfoot>
                         </table>

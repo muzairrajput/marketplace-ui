@@ -11,7 +11,7 @@ const Message = ({message}) => {
     );
 };
 
-const ChatroomDetail = ({ chatroomId }) => {
+const ChatroomDetail = ({ chatroomId, deleteCart }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -30,6 +30,10 @@ const ChatroomDetail = ({ chatroomId }) => {
           console.error('There was an error inserted messags', error);
         });
     e.target.elements[0].value = '';
+  }
+
+  const deleteCartItems = () => {
+    deleteCart();
   }
 
   useEffect(() => {
@@ -51,34 +55,44 @@ const ChatroomDetail = ({ chatroomId }) => {
   }, [chatroomId]);
 
   const handleCloseChat = () => { 
+    var chatRoomUrl = `https://souq-marketplace-api.onrender.com/chatroom/${chatroomId}`;
+    axios.put(chatRoomUrl)
+    .then(response => {
+        console.log('Chatroom Marked Completed');
+    })
+    .catch(error => {
+      console.error('There was an error getting messages', error);
+    });
     var url = `https://souq-marketplace-api.onrender.com/order/${orderId}`;
     axios.get(url)
-        .then(response => {
-          var order = response.data[0];
-          if (order.Status === 'Approved') {
-            navigate(`/orderDetails?orderId=${orderId}`);
-          }
-          else if (order.Status === 'Pending') {
-            var url = `https://souq-marketplace-api.onrender.com/order/updateStatus/${orderId}`;
-            var reqObj = {
-              Status: 'Failed'
-            };
-            axios.put(url, reqObj)
-                .then(response => {
-                    console.log('Order marked failed');
-                })
-                .catch(error => {
-                  console.error('There was an error getting messages', error);
-                });
-            navigate(`/`);
-          }
-          else {
-            navigate(`/`);
-          }
-        })
-        .catch(error => {
-          console.error('There was an error getting messages', error);
-        });
+    .then(response => {
+      var order = response.data[0];
+      if (order.Status === 'Approved') {
+        deleteCartItems();
+        navigate(`/orderDetails?orderId=${orderId}`);
+      }
+      else if (order.Status === 'Pending') {
+        var url = `https://souq-marketplace-api.onrender.com/order/updateStatus/${orderId}`;
+        var reqObj = {
+          Status: 'Failed'
+        };
+        axios.put(url, reqObj)
+            .then(response => {
+                console.log('Order marked failed');
+            })
+            .catch(error => {
+              console.error('There was an error getting messages', error);
+            });
+        deleteCartItems();
+        navigate(`/`);
+      }
+      else {
+        navigate(`/`);
+      }
+    })
+    .catch(error => {
+      console.error('There was an error getting messages', error);
+    });
   };
 
   return (
@@ -100,7 +114,7 @@ const ChatroomDetail = ({ chatroomId }) => {
   );
 };
 
-const ChatRoom = () => {
+const ChatRoom = ({deleteCart}) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const customerId = queryParams.get('customerId');
@@ -158,7 +172,7 @@ const ChatRoom = () => {
             ))}
         </ul>
       </div>
-      <ChatroomDetail chatroomId={selectedChatroomId}/>
+      <ChatroomDetail chatroomId={selectedChatroomId} deleteCart={deleteCart}/>
     </div>
   );
 };

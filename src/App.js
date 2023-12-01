@@ -24,14 +24,12 @@ function App() {
   const addCartItem = (cartItem) => {
     const cloneCartItems = [...cartItems];
     cloneCartItems.push(cartItem);
-    console.log(cartItem);
     setCartItems(cloneCartItems);
     return true;
   };
 
-  const deleteCartItem = (cartItem) => {
-    var item = cartItems.filter(ci => ci.id == cartItem.id);
-    const cloneCartItems = [...cartItems];
+  const deleteCart = () => {
+    setCartItems([]);
   };
 
   return (
@@ -41,7 +39,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home cartItems={cartItems} addCartItem={addCartItem} />} />
-          <Route path="/chatroom" element={<ChatRoom />} />
+          <Route path="/chatroom" element={<ChatRoom deleteCart={deleteCart}/>} />
           <Route path="/shop" element={<Shop cartItems={cartItems} addCartItem={addCartItem} />} />
           <Route path="/productdetail" element={<ProductDetail />} />
           <Route path="/login" element={<Login handleLoggedInUser={handleLoggedInUser} />} />

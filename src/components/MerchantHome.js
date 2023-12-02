@@ -81,17 +81,8 @@ const MerchantHome = ({cartItems, addCartItem}) => {
                                                                 </div>
                                                                 <div className="add-actions">
                                                                     <ul className="add-actions-link">
-                                                                        <li className="add-cart active" onClick={() => {
-                                                                                var cartItem = {};
-                                                                                cartItem["ProductID"] = p.Product_ID;
-                                                                                cartItem["CustomerID"] = p.CustomerID;
-                                                                                cartItem["Quantity"] = 1;
-                                                                                cartItem["UnitPrice"] = p.Price;
-                                                                                cartItem["ProductName"] = p.Name;
-                                                                                cartItem["VendorID"] = p.Vendor_ID;
-                                                                                addToCart(cartItem);
-                                                                            }}>
-                                                                            Add to Cart
+                                                                        <li className="add-cart active" onClick={() => navigate(`\\editProduct?productId=${p.ProductID}`)}>
+                                                                            Edit
                                                                         </li>
                                                                     </ul>
                                                                 </div>

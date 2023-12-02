@@ -60,6 +60,7 @@ function App() {
             <Route path="/chatroom" element={<ChatRoom deleteCart={deleteCart} />} />
             <Route path="/shop" element={<Shop cartItems={cartItems} addCartItem={addCartItem} />} />
             <Route path="/productdetail" element={<ProductDetail />} />
+            <Route path="/editProduct" element={<ProductDetail />} />
             <Route path="/login" element={<Login handleLoggedInUser={handleLoggedInUser} />} />
             <Route path="/merchantlogin" element={<MerchantLogin handleLoggedInUser={handleLoggedInUser} />} />
             <Route path="/shoppingcart" element={<ShoppingCart />} />

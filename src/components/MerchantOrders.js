@@ -6,7 +6,7 @@ import './MerchantOrder.css';
 const MerchantOrders = () => {    
     const navigate = useNavigate();
     const [orderItems, setOrderItems] = useState([]);
-    const [orderId, setOrderId] = useState(0);
+    const [orderDetails, setOrderId] = useState(0);
     const handleQtyUpdate = (val, productId) => {
         if (val < 0) return;
         const cartItemsDup = [...orderItems];
@@ -138,14 +138,25 @@ const MerchantOrders = () => {
                                                     <tr>    
                                                         <td></td>
                                                         <td></td>
-                                                        <td>
-                                                            <button className="register-button mt-0 btn-approve" onClick={() => SubmitUpdate()}>
-                                                                Approve
-                                                            </button>
-                                                            <button className="register-button mt-0 btn-reject" onClick={() => SubmitStatus(2)}>
-                                                                Reject
-                                                            </button>                                                            
-                                                        </td>
+                                                        {
+                                                            orderItems[0].Status == "Pending" && (
+                                                                <td>
+                                                                    <button className="register-button mt-0 btn-approve" onClick={() => SubmitUpdate()}>
+                                                                        Approve
+                                                                    </button>
+                                                                    <button className="register-button mt-0 btn-reject" onClick={() => SubmitStatus(2)}>
+                                                                        Reject
+                                                                    </button>                                                            
+                                                                </td>
+                                                            )
+                                                        }
+                                                        {
+                                                            ((orderItems[0].Status == "Approved") || (orderItems[0].Status == "Failed")) && (
+                                                                <td>
+                                                                    <strong><span class="amount">{orderItems[0].Status}</span></strong>                                      
+                                                                </td>
+                                                            )
+                                                        }
                                                     </tr>
                                                 )}
                                         </tfoot>

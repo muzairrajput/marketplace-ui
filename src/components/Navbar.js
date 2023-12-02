@@ -5,6 +5,10 @@ import './NavBar.css';
 const Navbar = ({ loggedInUser, cartItems }) => {
     const location = useLocation();
     const navigate = useNavigate();
+    const handleOrderNavigate = (url) => {
+        const newTab = window.open(url, '_blank');
+        newTab.focus();
+    }
     useEffect(() => {
         // This code will run whenever the count prop changes
         console.log('Count has changed:', cartItems.length);
@@ -27,7 +31,8 @@ const Navbar = ({ loggedInUser, cartItems }) => {
                             </div>
                             {/* <!-- Header Logo Area End Here --> */}
                             {/* <!-- Begin Header Middle Right Area --> */}
-                            {!location.pathname.includes('/chatroom') && !location.pathname.includes('/checkout') && !location.pathname.includes('/orderDetails') && (
+                            {!location.pathname.includes('/chatroom') && !location.pathname.includes('/checkout') 
+                            && !location.pathname.includes('/orderDetails') && !location.pathname.includes('/merchantOrders') && (
                                 <div className="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                                     {/* <!-- Begin Header Middle Searchbox Area --> */}
                                     <form action="#" className="hm-searchbox">
@@ -84,44 +89,72 @@ const Navbar = ({ loggedInUser, cartItems }) => {
                 </div>
                 {/* <!-- Header Middle Area End Here --> */}
                 {/* <!-- Begin Header Bottom Area --> */}
-                <div className="header-bottom mb-0 header-sticky stick d-none d-lg-block d-xl-block">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                {/* <!-- Begin Header Bottom Menu Area --> */}
-                                <div className="hb-menu">
-                                    <nav>
-                                        <ul>
-                                            <li className="dropdown-holder" onClick={() => navigate("/")}>Home</li>
-                                            <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">Categories</a>
-                                                <ul className="megamenu hb-megamenu">
-                                                    <li onClick={() => navigate("/shop?category=beauty")}>
-                                                        Beauty & Cosmetics
+                {location.pathname.includes('/merchantOrders') && (
+                        <div className="header-bottom mb-0 header-sticky stick d-none d-lg-block d-xl-block">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        {/* <!-- Begin Header Bottom Menu Area --> */}
+                                        <div className="hb-menu">
+                                            <nav>
+                                                <ul>
+                                                    <li className="dropdown-holder" onClick={() => navigate("/")}>Products</li>
+                                                    <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">ADD PRODUCTS</a>
                                                     </li>
-                                                    <li onClick={() => navigate("/shop?category=hardware")}>
-                                                        Hardware
-                                                    </li>
+                                                    <li className="catmenu-dropdown megamenu-holder" onClick={() => handleOrderNavigate(`/merchantOrders`)}>Orders</li>
+                                                    <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate(`/merchantChatroom?merchantId=${loggedInUser.Merchant_ID}`)}>Chatroom</li>
+                                                
                                                 </ul>
-                                            </li>
-                                            <li onClick={() => navigate("/checkout")}>Checkout</li>
-                                            <li className="catmenu-dropdown megamenu-holder"><a href="#">Login</a>
-                                                <ul className="megamenu hb-megamenu">
-                                                    <li onClick={() => navigate("/login")}>
-                                                        Customer Login
-                                                    </li>
-                                                    <li onClick={() => navigate("/merchantlogin")}>
-                                                        Merchant Login
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                            </nav>
+                                        </div>
+                                        {/* <!-- Header Bottom Menu Area End Here --> */}
+                                    </div>
                                 </div>
-                                {/* <!-- Header Bottom Menu Area End Here --> */}
                             </div>
                         </div>
-                    </div>
-                </div>
+                    )
+                }
+                {!location.pathname.includes('/merchantOrders') && (
+                        <div className="header-bottom mb-0 header-sticky stick d-none d-lg-block d-xl-block">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        {/* <!-- Begin Header Bottom Menu Area --> */}
+                                        <div className="hb-menu">
+                                            <nav>
+                                                <ul>
+                                                    <li className="dropdown-holder" onClick={() => navigate("/")}>Home</li>
+                                                    <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">Categories</a>
+                                                        <ul className="megamenu hb-megamenu">
+                                                            <li onClick={() => navigate("/shop?category=beauty")}>
+                                                                Beauty & Cosmetics
+                                                            </li>
+                                                            <li onClick={() => navigate("/shop?category=hardware")}>
+                                                                Hardware
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li onClick={() => navigate("/checkout")}>Checkout</li>
+                                                    <li className="catmenu-dropdown megamenu-holder"><a href="#">Login</a>
+                                                        <ul className="megamenu hb-megamenu">
+                                                            <li onClick={() => navigate("/login")}>
+                                                                Customer Login
+                                                            </li>
+                                                            <li onClick={() => navigate("/merchantlogin")}>
+                                                                Merchant Login
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        {/* <!-- Header Bottom Menu Area End Here --> */}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
             </header>
 
         </div>

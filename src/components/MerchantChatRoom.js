@@ -53,7 +53,7 @@ const ChatroomDetail = ({ chatroomId}) => {
   return (
     <div style={{ flex: 4, backgroundColor: '#fff', padding: '20px' }}>
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <h1 style={{marginRight: 'auto'}}>ChatRoom for Order Id: {orderId}</h1>
+          <h1 style={{marginRight: 'auto'}}>ChatRoom</h1>
         </div>
         <div style={{ overflowY: 'scroll', height: 'calc(100vh - 200px)' }}>
             {selectedChatRoomMessages.map((msg) => (
@@ -82,7 +82,7 @@ const MerchantChatRoom = () => {
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?&merchantId=${merchantId}`)
+    axios.get(`https://souq-marketplace-api.onrender.com/chatroom?merchantId=${merchantId}`)
         .then(response => {
           setChatRooms(response.data);
         })
@@ -98,7 +98,7 @@ const MerchantChatRoom = () => {
         <h1>Chatrooms</h1>
         <ul>
             {chatRooms.map((chatroom) => (
-                <button className='selectedChatRoom' key={chatroom.ChatRoom_ID} 
+                <button className='register-button mt-0' key={chatroom.ChatRoom_ID} 
                   onClick={() => handleSelectChatroom(chatroom.ChatRoom_ID)}>
                         ChatRoom {chatroom.ChatRoom_ID}
                 </button>

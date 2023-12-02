@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const MerchantNavbar = ({loggedInUser, cartItems}) => {
 
     const navigate = useNavigate();
- 
+    const handleOrderNavigate = (url) => {
+        const newTab = window.open(url, '_blank');
+        newTab.focus();
+    }
+
     return (
     <div>
         <header>
@@ -35,8 +39,8 @@ const MerchantNavbar = ({loggedInUser, cartItems}) => {
                                         <li className="dropdown-holder" onClick={() => navigate("/")}>Products</li>
                                         <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">ADD PRODUCTS</a>
                                         </li>
-                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate("/merchantOrders")}>Orders</li>
-                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate("/merchantChatroom")}>Chatroom</li>
+                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => handleOrderNavigate(`/merchantOrders`)}>Orders</li>
+                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate(`/merchantChatroom?merchantId=${loggedInUser.Merchant_ID}`)}>Chatroom</li>
                                       
                                     </ul>
                                 </nav>

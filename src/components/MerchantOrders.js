@@ -153,7 +153,7 @@ const MerchantOrders = () => {
                                                         {
                                                             ((orderItems[0].Status == "Approved") || (orderItems[0].Status == "Failed")) && (
                                                                 <td>
-                                                                    <strong><span class="amount">{orderItems[0].Status}</span></strong>                                      
+                                                                    <h2>{orderItems[0].Status}</h2>                                      
                                                                 </td>
                                                             )
                                                         }

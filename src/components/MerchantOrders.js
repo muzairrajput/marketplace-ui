@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import './MerchantOrder.css';
 
 const MerchantOrders = () => {    
+    const navigate = useNavigate();
     const [orderItems, setOrderItems] = useState([]);
     const [orderId, setOrderId] = useState(0);
     const handleQtyUpdate = (val, productId) => {
@@ -48,18 +51,49 @@ const MerchantOrders = () => {
 
     const SubmitUpdate = () => {
         console.log(orderItems);
+        for(var i=0; i<orderItems.length; i++) {
+            let oi = orderItems[i];
+            console.log(oi);
+            let orderItemReq = {Quantity: oi.Quantity, UnitPrice: oi.UnitPrice};
+            axios.put(`https://souq-marketplace-api.onrender.com/orderitem/${oi.OrderItemId}`, orderItemReq)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => console.error(err));   
+        }
+        var total = calcOrderTotal();
+        const orderUpdReq = {TotalPrice: total, Status: 'Approved'};
+        axios.put(`https://souq-marketplace-api.onrender.com/order/${orderItems[0].OrderId}`, orderUpdReq)
+        .then(response => {
+            console.log(response);
+            navigate('/MerchantHome');
+        })
+        .catch(err => console.error(err));
     }
-    useEffect(() => {
-      }, []);
+    
+    const SubmitStatus = (status) => {
+        let s = 'Approved';
+        if (status == 2)
+            s = 'Failed';
+        var statusUpdateBody = {Status : s};
+        axios.put(`https://souq-marketplace-api.onrender.com/order/updateStatus/${orderItems[0].OrderId}`,statusUpdateBody)
+        .then(response => {
+            console.log(response);
+            alert('Status Successfully updated: '+s);
+            navigate('/MerchantHome');
+        })
+        .catch(err => console.error(err));
+    }
 
-      const calcOrderTotal = () => {
-        var total = 0;
-        orderItems.forEach((ci) => {
-            total += parseFloat(ci.Quantity * ci.UnitPrice);
-        });
-        return total;
-      }
-      const orderTotal = calcOrderTotal();
+    const calcOrderTotal = () => {
+    var total = 0;
+    orderItems.forEach((ci) => {
+        total += parseFloat(ci.Quantity * ci.UnitPrice);
+    });
+    return total;
+    }
+    const orderTotal = calcOrderTotal();
+    
     return (
         <div class="body-wrapper">
             <div class="checkout-area pt-60 pb-30">
@@ -100,15 +134,20 @@ const MerchantOrders = () => {
                                                 <td><strong><span class="amount"></span></strong></td>
                                                 <td><strong><span class="amount">${orderTotal}</span></strong></td>
                                             </tr>
-                                            <tr>
                                                 {orderItems.length > 0 && (
-                                                    <td colSpan={3}>
-                                                    <button onClick={() => SubmitUpdate()}>
-                                                        Submit
-                                                    </button>                                                            
-                                                    </td>
+                                                    <tr>    
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <button className="register-button mt-0 btn-approve" onClick={() => SubmitUpdate()}>
+                                                                Approve
+                                                            </button>
+                                                            <button className="register-button mt-0 btn-reject" onClick={() => SubmitStatus(2)}>
+                                                                Reject
+                                                            </button>                                                            
+                                                        </td>
+                                                    </tr>
                                                 )}
-                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>

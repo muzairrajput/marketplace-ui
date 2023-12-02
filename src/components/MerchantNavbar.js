@@ -32,14 +32,11 @@ const MerchantNavbar = ({loggedInUser, cartItems}) => {
                             <div className="hb-menu">
                                 <nav>
                                     <ul>
-                                        <li className="dropdown-holder"><a href="/MerchantHome">Products</a>
-                                        </li>
+                                        <li className="dropdown-holder" onClick={() => navigate("/")}>Products</li>
                                         <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">ADD PRODUCTS</a>
                                         </li>
-                                        <li className="catmenu-dropdown megamenu-holder"><a href='/merchant/login'>Orders </a>
-                                        </li>
-                                        <li className="catmenu-dropdown megamenu-holder"><a href='/merchant/login'>Chatroom</a>
-                                        </li>
+                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate("/merchantOrders")}>Orders</li>
+                                        <li className="catmenu-dropdown megamenu-holder" onClick={() => navigate("/merchantChatroom")}>Chatroom</li>
                                       
                                     </ul>
                                 </nav>

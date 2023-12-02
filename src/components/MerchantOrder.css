@@ -1,0 +1,15 @@
+.btn-approve {
+    background-color: green;
+}
+
+.btn-approve :hover{
+    background-color: darkgreen;
+}
+
+.btn-reject {
+    background-color: red;
+}
+
+.btn-approve :hover{
+    background-color: maroon;
+}

@@ -14,6 +14,8 @@ import MerchantLogin from './components/MerchantLogin';
 import OrderDetails from './components/OrderDetail';
 import MerchantHome from './components/MerchantHome';
 import MerchantNavbar from './components/MerchantNavbar';
+import MerchantChatRoom from './components/MerchantChatRoom';
+import MerchantOrders from './components/MerchantOrders';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -25,7 +27,14 @@ function App() {
 
   const addCartItem = (cartItem) => {
     const cloneCartItems = [...cartItems];
-    cloneCartItems.push(cartItem);
+    let itemExist = false;
+    cloneCartItems.forEach((item) => {
+      if (item.ProductID == cartItem.ProductID){
+        item.Quantity +=1;
+        itemExist = true;
+      }
+    });
+    if(!itemExist) cloneCartItems.push(cartItem);
     setCartItems(cloneCartItems);
     return true;
   };
@@ -58,6 +67,8 @@ function App() {
             <Route path="/orderDetails" element={<OrderDetails />} />
             <Route path="/MerchantHome" element={<MerchantHome/>} />
             <Route path="MerchantNavbar" element={<MerchantNavbar/>} />
+            <Route path="/merchantChatroom" element={<MerchantChatRoom />} />
+            <Route path="/merchantOrders" element={<MerchantOrders />} />
           </Routes>
         </div>
       </Router>

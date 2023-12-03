@@ -14,6 +14,7 @@ import MerchantLogin from './components/Merchants/Login';
 import OrderDetails from './components/OrderDetail';
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
+import EditProductList from './components/EditProductList';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -51,6 +52,7 @@ function App() {
           <Route path="/orderDetails" element={<OrderDetails />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/editproduct" element={<EditProduct />} />
+          <Route path="/editproductlist" element={<EditProductList />} />
         </Routes>
       </div>
     </Router>

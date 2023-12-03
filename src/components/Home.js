@@ -49,6 +49,10 @@ const Home = ({cartItems, addCartItem}) => {
         });
   };
 
+  const handleProductDetailNavigation = (productId) => {
+    navigate(`/productdetail?productId=${productId}`);
+  }
+
   return (
     <div>
             <div className="body-wrapper">
@@ -89,20 +93,18 @@ const Home = ({cartItems, addCartItem}) => {
                                                 {products.map((p) =>(
                                                     <div className="col-lg-4 col-md-4 col-sm-6 mt-40"> 
                                                         <div className="single-product-wrap">
-                                                            <div className="product-image">
-                                                                <a href={`/productDetail?productId=${p.ProductID}`}>
-                                                                    <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
-                                                                </a>
+                                                            <div className="product-image" onClick={() => handleProductDetailNavigation(p.Product_ID)}>
+                                                                <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
                                                                 <span className="sticker"></span>
                                                             </div>
                                                             <div className="product_desc">
                                                                 <div className="product_desc_info">
                                                                     <div className="product-review">
-                                                                        <h5 className="manufacturer">
-                                                                            <a href={`/productDetail?productId=${p.ProductID}`}>Merchant {p.Name}</a>
+                                                                        <h5 className="manufacturer" onClick={() => handleProductDetailNavigation(p.Product_ID)}>
+                                                                            Merchant {p.Name}
                                                                         </h5>
                                                                     </div>
-                                                                    <h4><a className="product_name" href={`/productDetail?productId=${p.ProductID}`}>{p.Name}</a></h4>
+                                                                    <h4 className='product_name' onClick={() => handleProductDetailNavigation(p.Product_ID)}>{p.Name}</h4>
                                                                     <div className="price-box">
                                                                         <span className="new-price">${p.Price}</span>
                                                                     </div>

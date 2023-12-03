@@ -70,6 +70,9 @@ function App() {
             <Route path="MerchantNavbar" element={<MerchantNavbar/>} />
             <Route path="/merchantChatroom" element={<MerchantChatRoom />} />
             <Route path="/merchantOrders" element={<MerchantOrders />} />
+            <Route path="/addproduct" element={<AddProduct />} />
+            <Route path="/editproduct" element={<EditProduct />} />
+            <Route path="/editproductlist" element={<EditProductList />} />
           </Routes>
         </div>
       </Router>

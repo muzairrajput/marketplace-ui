@@ -71,7 +71,7 @@ const AddProduct = ({handleLoggedInUser}) => {
                                             <input type="text" name="productQuality" id="productQuality"/>
                                         </div>  
                                         <div className="form-group">
-                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Add New Product</button>
+                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Edit Product</button>
                                         </div>
                                     </form>
                                 </div>

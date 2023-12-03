@@ -15,20 +15,20 @@ const AddProduct = ({handleLoggedInUser}) => {
             e.preventDefault();
             
             var registerModel = {
-                Name: e.target.elements[0].value, 
-                Description: e.target.elements[2].value, 
-                Category: e.target.elements[1].value, 
-                Price: e.target.elements[3].value, 
-                StockQuality: e.target.elements[4].value,
-                Vendor_ID: e.target.elements[0].value
+                name: e.target.elements[0].value, 
+                description: e.target.elements[3].value, 
+                category: e.target.elements[1].value, 
+                price: e.target.elements[4].value, 
+                stock: e.target.elements[5].value,
+                vendorId: e.target.elements[6].value
             };
-            axios.post('https://souq-marketplace-api.onrender.com/addproduct', registerModel)
+            axios.post('https://souq-marketplace-api.onrender.com/product', registerModel)
             .then(Response => {
                 if(Response.status == 200) {
-                    return alert("User Registered");
+                    return alert("Product has been added");
                 } else {
                     console.log("error");
-                    return alert('Error registering user')
+                    return alert('Error adding product')
                 }
             })
             .catch(err => {console.log(err); return alert(err); });
@@ -69,6 +69,7 @@ const AddProduct = ({handleLoggedInUser}) => {
                                         <div className="form-group">
                                             <label>Product Quality <span className="required">*</span></label>
                                             <input type="text" name="productQuality" id="productQuality"/>
+                                            <input type="hidden" name="vendorId" id="vendorId" value="1" />
                                         </div>  
                                         <div className="form-group">
                                             <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Add New Product</button>

@@ -16,6 +16,9 @@ import MerchantHome from './components/MerchantHome';
 import MerchantNavbar from './components/MerchantNavbar';
 import MerchantChatRoom from './components/MerchantChatRoom';
 import MerchantOrders from './components/MerchantOrders';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
+import EditProductList from './components/EditProductList';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);

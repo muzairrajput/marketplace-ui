@@ -154,7 +154,7 @@ const Checkout = ({loggedInUser, cartItems, addCartItem}) => {
                                             <tr>
                                                 {checkoutItems.length > 0 && (
                                                     <td colSpan={3}>
-                                                    <button onClick={() => handleChatroomNavigate()}>
+                                                    <button className='register-button mt-0' onClick={() => handleChatroomNavigate()}>
                                                         Chat With Merchant
                                                     </button>                                                            
                                                     </td>

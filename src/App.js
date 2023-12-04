@@ -68,8 +68,8 @@ function App() {
             <Route path="/shoppingcart" element={<ShoppingCart />} />
             <Route path="/checkout" element={<Checkout loggedInUser={loggedInUser} cartItems={cartItems} addCartItem={addCartItem} />} />
             <Route path="/orderDetails" element={<OrderDetails />} />
-            <Route path="/MerchantHome" element={<MerchantHome/>} />
-            <Route path="MerchantNavbar" element={<MerchantNavbar/>} />
+            <Route path="/MerchantHome" element={<MerchantHome loggedInUser={loggedInUser}/>} />
+            <Route path="MerchantNavbar" element={<MerchantNavbar loggedInUser={loggedInUser}/>} />
             <Route path="/merchantChatroom" element={<MerchantChatRoom />} />
             <Route path="/merchantOrders" element={<MerchantOrders />} />
             <Route path="/addproduct" element={<AddProduct />} />

@@ -106,7 +106,7 @@ const Login = ({ handleLoggedInUser }) => {
                         <div className="col-sm-12 col-md-12 col-lg-6 col-xs-12">
                             <form onSubmit={handleRegister}>
                                 <div className="login-form">
-                                    <h4 className="login-title"> Customer AccountRegister</h4>
+                                    <h4 className="login-title"> Customer Account Register</h4>
                                     <div className="row">
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>First Name</label>

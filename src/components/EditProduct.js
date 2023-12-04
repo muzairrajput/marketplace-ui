@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const EditProduct = ({handleLoggedInUser}) => {
-    const [errorMessage, setErrorMessage] = useState('');
-    const [User_Name, set_User_Name] = useState('');
-    const [Pass, set_Pass] = useState('');
+    // const [errorMessage, setErrorMessage] = useState('');
+    // const [User_Name, set_User_Name] = useState('');
+    // const [Pass, set_Pass] = useState('');
 
         const navigate = useNavigate()        
 
@@ -26,28 +26,83 @@ const EditProduct = ({handleLoggedInUser}) => {
           }, []);
 
         
-        const handleAddProduct = (e) => {
-            e.preventDefault();
+        // const handleUpdateProduct = (e) => {
+        //     e.preventDefault();
             
-            var registerModel = {
-                name: e.target.elements[0].value, 
-                description: e.target.elements[3].value, 
-                category: e.target.elements[1].value, 
-                price: e.target.elements[4].value, 
-                stock: e.target.elements[5].value,
-                vendorId: e.target.elements[6].value
-            };
-            axios.put('https://souq-marketplace-api.onrender.com/product/${productId}', registerModel)
-            .then(Response => {
-                if(Response.status == 200) {
-                    return alert("Product has been added");
-                } else {
-                    console.log("error");
-                    return alert('Error adding product')
+        //     var registerModel = {
+        //         name: e.target.elements[0].value, 
+        //         description: e.target.elements[3].value, 
+        //         category: e.target.elements[1].value, 
+        //         price: e.target.elements[4].value, 
+        //         stock: e.target.elements[5].value,
+        //         vendorId: e.target.elements[6].value
+        //     };
+        //     axios.put('https://souq-marketplace-api.onrender.com/product/${productId}', registerModel)
+        //     .then(Response => {
+        //         if(Response.status == 200) {
+        //             return alert("Product has been Updated"+registerModel);
+        //         } else {
+        //             console.log("error");
+        //             return alert('Error updating product')
+        //         }
+        //     })
+        //     .catch(err => {console.log(err); return alert(err); });
+        // }
+
+
+
+        // New
+        
+    
+            // const [formData, setFormData] = useState({
+            //     name: e.target.elements[0].value, 
+            //     description: e.target.elements[3].value, 
+            //     category: e.target.elements[1].value, 
+            //     price: e.target.elements[4].value, 
+            //     stock: e.target.elements[5].value,
+            //     vendorId: e.target.elements[6].value
+            // });
+          
+            // const handleInputChange = (e) => {
+            //   const { name, value } = e.target;
+            //   setFormData({
+            //     ...formData,
+            //     [name]: value,
+            //   });
+            // };
+          
+                 
+
+            const handleFormSubmit = async (e) => {
+                var formData = {
+                    name: e.target.elements[0].value, 
+                    description: e.target.elements[3].value, 
+                    category: e.target.elements[1].value, 
+                    price: e.target.elements[4].value, 
+                    stock: e.target.elements[5].value,
+                    vendorId: e.target.elements[6].value
+                };  
+                       
+              e.preventDefault();
+          
+              try {
+                const response = await fetch('https://souq-marketplace-api.onrender.com/product/5', {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(formData),
+                });
+          
+                if (!response.ok) {
+                  throw new Error('Failed to update product');
                 }
-            })
-            .catch(err => {console.log(err); return alert(err); });
-        }
+                console.log('Product updated successfully');
+                return alert('Product updated successfully!')
+              } catch (error) {
+                console.error('Error updating product:', error.message);
+              }
+            };
 
         return (
         <div>
@@ -69,7 +124,7 @@ const EditProduct = ({handleLoggedInUser}) => {
                             <div className="contact-form-content pt-sm-55 pt-xs-55">
                                 <h3 className="contact-page-title">Update Product {productDetails.Name}</h3>
                                 <div className="contact-form">
-                                    <form onSubmit={handleAddProduct} id="contact-form" method="post" enctype="multipart/form-data">
+                                    <form onSubmit={handleFormSubmit} id="contact-form" method="post" enctype="multipart/form-data">
                                         <div className="form-group">
                                             <label>Product Name <span className="required">*</span></label>
                                             <input type="text" name="productName" id="productName" required/>
@@ -94,11 +149,11 @@ const EditProduct = ({handleLoggedInUser}) => {
                                         </div>
                                         <div className="form-group">
                                             <label>Product Quality <span className="required">*</span></label>
-                                            <input type="text" name="productQuality" id="productQuality"/>
-                                            <input type="hidden" name="vendorId" id="vendorId" value="1" />
+                                            <input type="text" name="productQuality" id="productQuality" />
+                                            <input type="hidden" name="vendorId" id="vendorId" />
                                         </div>  
                                         <div className="form-group">
-                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Add New Product</button>
+                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Update Product</button>
                                         </div>
                                     </form>
                                 </div>

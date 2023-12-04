@@ -24,7 +24,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
                     navigate('/MerchantHome');
                 } else {
                     console.log("error");
-                    setErrorMessage('Invalid username or password. Please try again.');
+                    setErrorMessage('Invalid entry of username or password. Please try againto login.');
                 }
             })
             .catch(err => console.log(err));
@@ -33,7 +33,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
     const handleRegister = (e) => {
         e.preventDefault();
         if (e.target.elements[6].value != e.target.elements[7].value) {
-            return alert('Password and Confirm Password dont match');
+            return alert('Password and confirm Password doesnot match');
         }
         var registerModel = {
             BusinessName: e.target.elements[0].value,
@@ -109,7 +109,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
                         <div className="col-sm-12 col-md-12 col-lg-6 col-xs-12">
                             <form onSubmit={handleRegister}>
                                 <div className="login-form">
-                                    <h4 className="login-title">Register</h4>
+                                    <h4 className="login-title">Business account Register</h4>
                                     <div className="row">
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>BusinessName</label>

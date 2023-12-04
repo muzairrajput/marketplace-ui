@@ -10,25 +10,44 @@ const AddProduct = ({handleLoggedInUser}) => {
     const [Pass, set_Pass] = useState('');
 
         const navigate = useNavigate()
+
+        const [product, setProduct] = useState(null);
+
+        useEffect(() => {
+            const fetchData = async () => {
+            try {
+                const response = await fetch(`https://souq-marketplace-api.onrender.com/product/${match.params.id}`);
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setProduct(data[0]); // Assuming the API returns an array with a single product
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+            };
+
+            fetchData();
+        }, [match.params.id]);
         
         const handleAddProduct = (e) => {
             e.preventDefault();
             
             var registerModel = {
-                Name: e.target.elements[0].value, 
-                Description: e.target.elements[2].value, 
-                Category: e.target.elements[1].value, 
-                Price: e.target.elements[3].value, 
-                StockQuality: e.target.elements[4].value,
-                Vendor_ID: e.target.elements[0].value
+                name: e.target.elements[0].value, 
+                description: e.target.elements[3].value, 
+                category: e.target.elements[1].value, 
+                price: e.target.elements[4].value, 
+                stock: e.target.elements[5].value,
+                vendorId: e.target.elements[6].value
             };
-            axios.post('https://souq-marketplace-api.onrender.com/addproduct', registerModel)
+            axios.post('https://souq-marketplace-api.onrender.com/product', registerModel)
             .then(Response => {
                 if(Response.status == 200) {
-                    return alert("User Registered");
+                    return alert("Product has been added");
                 } else {
                     console.log("error");
-                    return alert('Error registering user')
+                    return alert('Error adding product')
                 }
             })
             .catch(err => {console.log(err); return alert(err); });
@@ -41,7 +60,7 @@ const AddProduct = ({handleLoggedInUser}) => {
                     <div className="row">
                     <div className="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
                             <div className="contact-form-content pt-sm-55 pt-xs-55">
-                                <h3 className="contact-page-title">Add New Product</h3>
+                                <h3 className="contact-page-title">Update {product.name} </h3>
                                 <div className="contact-form">
                                     <form onSubmit={handleAddProduct} id="contact-form" method="post" enctype="multipart/form-data">
                                         <div className="form-group">
@@ -69,9 +88,10 @@ const AddProduct = ({handleLoggedInUser}) => {
                                         <div className="form-group">
                                             <label>Product Quality <span className="required">*</span></label>
                                             <input type="text" name="productQuality" id="productQuality"/>
+                                            <input type="hidden" name="vendorId" id="vendorId" value="1" />
                                         </div>  
                                         <div className="form-group">
-                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Edit Product</button>
+                                            <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Add New Product</button>
                                         </div>
                                     </form>
                                 </div>

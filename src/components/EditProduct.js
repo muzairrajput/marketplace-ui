@@ -77,7 +77,7 @@ const EditProduct = ({handleLoggedInUser}) => {
                 var formData = {
                     name: e.target.elements[0].value, 
                     description: e.target.elements[3].value, 
-                    category: e.target.elements[1].value, 
+                    category: e.target.elements[2].value, 
                     price: e.target.elements[4].value, 
                     stock: e.target.elements[5].value,
                     vendorId: e.target.elements[6].value

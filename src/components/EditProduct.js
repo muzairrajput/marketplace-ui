@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AddProduct = ({handleLoggedInUser}) => {
+const AddProduct = ({handleLoggedInUser},{ match }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [User_Name, set_User_Name] = useState('');
     const [Pass, set_Pass] = useState('');

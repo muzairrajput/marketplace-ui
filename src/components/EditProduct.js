@@ -1,34 +1,30 @@
-import React from 'react';
-import { useState } from 'react'
+// import React from 'react';
 //import validation from './Validationsignup'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AddProduct = ({handleLoggedInUser},{ match }) => {
+const EditProduct = ({handleLoggedInUser}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [User_Name, set_User_Name] = useState('');
     const [Pass, set_Pass] = useState('');
 
-        const navigate = useNavigate()
+        const navigate = useNavigate()        
 
-        const [product, setProduct] = useState(null);
-
+        const location = useLocation();
+        const queryParams = new URLSearchParams(location.search);
+        const productId = queryParams.get('productId');
+        const [productDetails, setProductDetails] = useState({});
         useEffect(() => {
-            const fetchData = async () => {
-            try {
-                const response = await fetch(`https://souq-marketplace-api.onrender.com/product/${match.params.id}`);
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
+            axios.get(`https://souq-marketplace-api.onrender.com/product/${productId}`)
+            .then(response => {
+                if (response.data.length > 0) {
+                    setProductDetails(response.data[0]);
                 }
-                const data = await response.json();
-                setProduct(data[0]); // Assuming the API returns an array with a single product
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-            };
+            })
+            .catch(err => console.error(err));
+          }, []);
 
-            fetchData();
-        }, [match.params.id]);
         
         const handleAddProduct = (e) => {
             e.preventDefault();
@@ -41,7 +37,7 @@ const AddProduct = ({handleLoggedInUser},{ match }) => {
                 stock: e.target.elements[5].value,
                 vendorId: e.target.elements[6].value
             };
-            axios.post('https://souq-marketplace-api.onrender.com/product', registerModel)
+            axios.put('https://souq-marketplace-api.onrender.com/product/${productId}', registerModel)
             .then(Response => {
                 if(Response.status == 200) {
                     return alert("Product has been added");
@@ -56,11 +52,22 @@ const AddProduct = ({handleLoggedInUser},{ match }) => {
         return (
         <div>
             <br/>
+            <div className="breadcrumb-area">
+                <div className="container">
+                    <div className="breadcrumb-content">
+                        <ul>
+                            <li onClick={() => navigate('\\MerchantHome')}>Home</li>
+                            <li className="active">Product Details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {/* <!-- Li's Breadcrumb Area End Here --> */}
         <div className="container">
                     <div className="row">
                     <div className="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
                             <div className="contact-form-content pt-sm-55 pt-xs-55">
-                                <h3 className="contact-page-title">Update {product.name} </h3>
+                                <h3 className="contact-page-title">Update Product {productDetails.Name}</h3>
                                 <div className="contact-form">
                                     <form onSubmit={handleAddProduct} id="contact-form" method="post" enctype="multipart/form-data">
                                         <div className="form-group">
@@ -127,4 +134,4 @@ const AddProduct = ({handleLoggedInUser},{ match }) => {
         )
 }
 
-export default AddProduct;
+export default EditProduct;

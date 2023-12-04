@@ -24,7 +24,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
                     navigate('/MerchantHome');
                 } else {
                     console.log("error");
-                    setErrorMessage('Invalid entry of username or password. Please try againto login.');
+                    setErrorMessage('Invalid entry of username or password. Please try to login.');
                 }
             })
             .catch(err => console.log(err));
@@ -33,7 +33,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
     const handleRegister = (e) => {
         e.preventDefault();
         if (e.target.elements[6].value != e.target.elements[7].value) {
-            return alert('Password and confirm Password doesnot match');
+            return alert('Password and Confirm Password doesnot match');
         }
         var registerModel = {
             BusinessName: e.target.elements[0].value,
@@ -51,7 +51,7 @@ const MerchantLogin = ({ handleLoggedInUser }) => {
                     return alert("User Registered");
                 } else {
                     console.log("error");
-                    return alert('Error registering user')
+                    return alert('Error in registering user')
                 }
             })
             .catch(err => { console.log(err); return alert(err); });

@@ -4,23 +4,23 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({handleLoggedInUser}) => {
+const Login = ({ handleLoggedInUser }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [User_Name, set_User_Name] = useState('');
     const [Pass, set_Pass] = useState('');
 
-        const navigate = useNavigate()
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            axios.post('https://souq-marketplace-api.onrender.com/login', {username: User_Name, password: Pass})
+    const navigate = useNavigate()
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        axios.post('https://souq-marketplace-api.onrender.com/login', { username: User_Name, password: Pass })
             .then(Response => {
-                if(Response.status == 200) {
+                if (Response.status == 200) {
                     axios.get(`https://souq-marketplace-api.onrender.com/customer?email=${User_Name}`)
-                    .then(resp => {
-                        var userData = resp.data[0];
-                        handleLoggedInUser(userData);
-                    })
-                    .catch(e => console.log(e));
+                        .then(resp => {
+                            var userData = resp.data[0];
+                            handleLoggedInUser(userData);
+                        })
+                        .catch(e => console.log(e));
                     navigate('/');
                 } else {
                     console.log("error");
@@ -28,35 +28,35 @@ const Login = ({handleLoggedInUser}) => {
                 }
             })
             .catch(err => console.log(err));
-        }
+    }
 
-        const handleRegister = (e) => {
-            e.preventDefault();
-            if (e.target.elements[5].value != e.target.elements[6].value) {
-                return alert('Password and Confirm Password dont match');
-            }
-            var registerModel = {
-                Username: e.target.elements[4].value, 
-                Password: e.target.elements[5].value, 
-                Email: e.target.elements[4].value, 
-                Address: e.target.elements[2].value, 
-                Phone: e.target.elements[3].value
-            };
-            axios.post('https://souq-marketplace-api.onrender.com/signup', registerModel)
+    const handleRegister = (e) => {
+        e.preventDefault();
+        if (e.target.elements[5].value != e.target.elements[6].value) {
+            return alert('Password and Confirm Password dont match');
+        }
+        var registerModel = {
+            Username: e.target.elements[4].value,
+            Password: e.target.elements[5].value,
+            Email: e.target.elements[4].value,
+            Address: e.target.elements[2].value,
+            Phone: e.target.elements[3].value
+        };
+        axios.post('https://souq-marketplace-api.onrender.com/signup', registerModel)
             .then(Response => {
-                if(Response.status == 200) {
+                if (Response.status == 200) {
                     return alert("User Registered");
                 } else {
                     console.log("error");
                     return alert('Error registering user')
                 }
             })
-            .catch(err => {console.log(err); return alert(err); });
-        }
-       
-   
-        return (
-            <div>     
+            .catch(err => { console.log(err); return alert(err); });
+    }
+
+
+    return (
+        <div>
             <div className="breadcrumb-area">
                 <div className="container">
                     <div className="breadcrumb-content">
@@ -80,15 +80,15 @@ const Login = ({handleLoggedInUser}) => {
                                     <div className="row">
                                         <div className="col-md-12 col-12 mb-20">
                                             <label>Username*</label>
-                                            <input className="mb-0" type="text" placeholder="User Name" onChange={e => set_User_Name(e.target.value)}/>
+                                            <input className="mb-0" type="text" placeholder="User Name" onChange={e => set_User_Name(e.target.value)} />
                                         </div>
                                         <div className="col-12 mb-20">
                                             <label>Password</label>
-                                            <input className="mb-0" type="password" placeholder="Password" onChange={e => set_Pass(e.target.value)}/>
+                                            <input className="mb-0" type="password" placeholder="Password" onChange={e => set_Pass(e.target.value)} />
                                         </div>
                                         <div className="col-md-8">
                                             <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
-                                                <input type="checkbox" id="remember_me"/>
+                                                <input type="checkbox" id="remember_me" />
                                                 <label for="remember_me">Remember me</label>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@ const Login = ({handleLoggedInUser}) => {
                                             <a href="/"> Forgotten pasward?</a>
                                         </div>
                                         <div className="col-md-12">
-                                            <button className="register-button mt-0">Login</button>
+                                            <button className="register-button mt-0">Customer Login</button>
                                         </div>
                                     </div>
                                 </div>
@@ -106,35 +106,35 @@ const Login = ({handleLoggedInUser}) => {
                         <div className="col-sm-12 col-md-12 col-lg-6 col-xs-12">
                             <form onSubmit={handleRegister}>
                                 <div className="login-form">
-                                    <h4 className="login-title">Register</h4>
+                                    <h4 className="login-title"> Customer AccountRegister</h4>
                                     <div className="row">
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>First Name</label>
-                                            <input className="mb-0" type="text" name="firstName" placeholder="First Name"/>
+                                            <input className="mb-0" type="text" name="firstName" placeholder="First Name" />
                                         </div>
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>Last Name</label>
-                                            <input className="mb-0" type="text" name="lastName" placeholder="Last Name"/>
+                                            <input className="mb-0" type="text" name="lastName" placeholder="Last Name" />
                                         </div>
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>Address</label>
-                                            <input className="mb-0" type="text" name="address" placeholder="Address"/>
+                                            <input className="mb-0" type="text" name="address" placeholder="Address" />
                                         </div>
                                         <div className="col-md-6 col-12 mb-20">
                                             <label>Phone</label>
-                                            <input className="mb-0" type="text" name="phone" placeholder="Phone"/>
+                                            <input className="mb-0" type="text" name="phone" placeholder="Phone" />
                                         </div>
                                         <div className="col-md-12 mb-20">
                                             <label>Email Address*</label>
-                                            <input className="mb-0" type="email" name="email" placeholder="Email Address"/>
+                                            <input className="mb-0" type="email" name="email" placeholder="Email Address" />
                                         </div>
                                         <div className="col-md-6 mb-20">
                                             <label>Password</label>
-                                            <input className="mb-0" type="password" name="password" placeholder="Password"/>
+                                            <input className="mb-0" type="password" name="password" placeholder="Password" />
                                         </div>
                                         <div className="col-md-6 mb-20">
                                             <label>Confirm Password</label>
-                                            <input className="mb-0" type="password" name="confirmPassword" placeholder="Confirm Password"/>
+                                            <input className="mb-0" type="password" name="confirmPassword" placeholder="Confirm Password" />
                                         </div>
                                         <div className="col-12">
                                             <button className="register-button mt-0">Register</button>
@@ -159,7 +159,7 @@ const Login = ({handleLoggedInUser}) => {
                                 <div className="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                     <div className="li-shipping-inner-box">
                                         <div className="shipping-icon">
-                                            <img src="assets/images/shipping-icon/1.png" alt="Shipping Icon"/>
+                                            <img src="assets/images/shipping-icon/1.png" alt="Shipping Icon" />
                                         </div>
                                         <div className="shipping-text">
                                             <h2>Free Delivery</h2>
@@ -172,7 +172,7 @@ const Login = ({handleLoggedInUser}) => {
                                 <div className="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                     <div className="li-shipping-inner-box">
                                         <div className="shipping-icon">
-                                            <img src="assets/images/shipping-icon/2.png" alt="Shipping Icon"/>
+                                            <img src="assets/images/shipping-icon/2.png" alt="Shipping Icon" />
                                         </div>
                                         <div className="shipping-text">
                                             <h2>Safe Payment</h2>
@@ -185,7 +185,7 @@ const Login = ({handleLoggedInUser}) => {
                                 <div className="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
                                     <div className="li-shipping-inner-box">
                                         <div className="shipping-icon">
-                                            <img src="assets/images/shipping-icon/3.png" alt="Shipping Icon"/>
+                                            <img src="assets/images/shipping-icon/3.png" alt="Shipping Icon" />
                                         </div>
                                         <div className="shipping-text">
                                             <h2>Shop with Confidence</h2>
@@ -198,7 +198,7 @@ const Login = ({handleLoggedInUser}) => {
                                 <div className="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
                                     <div className="li-shipping-inner-box">
                                         <div className="shipping-icon">
-                                            <img src="assets/images/shipping-icon/4.png" alt="Shipping Icon"/>
+                                            <img src="assets/images/shipping-icon/4.png" alt="Shipping Icon" />
                                         </div>
                                         <div className="shipping-text">
                                             <h2>24/7 Help Center</h2>
@@ -221,7 +221,7 @@ const Login = ({handleLoggedInUser}) => {
                                 {/* <!-- Begin Footer Logo Area --> */}
                                 <div className="col-lg-4 col-md-6">
                                     <div className="footer-logo">
-                                        <img src="assets/images/menu/logo/1.jpg" alt="Footer Logo"/>
+                                        <img src="assets/images/menu/logo/1.jpg" alt="Footer Logo" />
                                         <p className="info">
                                             We are a team of designers and developers that create high quality HTML Template & Woocommerce, Shopify Theme.
                                         </p>
@@ -309,12 +309,12 @@ const Login = ({handleLoggedInUser}) => {
                                     <div className="footer-newsletter">
                                         <h4>Sign up to newsletter</h4>
                                         <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="footer-subscribe-form validate" target="_blank" novalidate>
-                                           <div id="mc_embed_signup_scroll">
-                                              <div id="mc-form" className="mc-form subscribe-form form-group" >
-                                                <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email" />
-                                                <button  className="btn" id="mc-submit">Subscribe</button>
-                                              </div>
-                                           </div>
+                                            <div id="mc_embed_signup_scroll">
+                                                <div id="mc-form" className="mc-form subscribe-form form-group" >
+                                                    <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email" />
+                                                    <button className="btn" id="mc-submit">Subscribe</button>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                     {/* <!-- Footer Newsletter Area End Here --> */}
@@ -358,7 +358,7 @@ const Login = ({handleLoggedInUser}) => {
                                 {/* <!-- Begin Footer Payment Area --> */}
                                 <div className="copyright text-center">
                                     <a href="/">
-                                        <img src="assets/images/payment/1.png" alt=""/>
+                                        <img src="assets/images/payment/1.png" alt="" />
                                     </a>
                                 </div>
                                 {/* <!-- Footer Payment Area End Here --> */}
@@ -375,6 +375,6 @@ const Login = ({handleLoggedInUser}) => {
             </div>
             {/* <!-- Footer Area End Here --> */}
         </div>
-        )
+    )
 }
 export default Login;

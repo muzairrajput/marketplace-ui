@@ -25,6 +25,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
 
   const handleLoggedInUser = (user) => {
+    console.log(user);
     setLoggedInUser(user);
   }
 
@@ -72,7 +73,7 @@ function App() {
             <Route path="MerchantNavbar" element={<MerchantNavbar loggedInUser={loggedInUser}/>} />
             <Route path="/merchantChatroom" element={<MerchantChatRoom />} />
             <Route path="/merchantOrders" element={<MerchantOrders />} />
-            <Route path="/addproduct" element={<AddProduct />} />
+            <Route path="/addproduct" element={<AddProduct loggedInUser={loggedInUser}/>} />
             <Route path="/editproduct" element={<EditProduct />} />
             <Route path="/editproductlist" element={<EditProductList loggedInUser={loggedInUser}/>} />
           </Routes>

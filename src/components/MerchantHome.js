@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const MerchantHome = ({loggedInUser}) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   
   useEffect(() => {
+    console.log(loggedInUser);
     // GET request using axios inside useEffect React hook
-    console.log('Merchant User');
     const url = `https://souq-marketplace-api.onrender.com/product?vendorId=${loggedInUser.Merchant_ID}`;
-    console.log(url);
     axios.get(url)
         .then(response => {
             setProducts(response.data);

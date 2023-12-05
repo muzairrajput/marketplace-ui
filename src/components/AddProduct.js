@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AddProduct = ({handleLoggedInUser}) => {
+const AddProduct = ({loggedInUser}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [User_Name, set_User_Name] = useState('');
     const [Pass, set_Pass] = useState('');
@@ -17,10 +17,10 @@ const AddProduct = ({handleLoggedInUser}) => {
             var registerModel = {
                 name: e.target.elements[0].value, 
                 description: e.target.elements[3].value, 
-                category: e.target.elements[1].value, 
+                category: e.target.elements[2].value, 
                 price: e.target.elements[4].value, 
                 stock: e.target.elements[5].value,
-                vendorId: e.target.elements[6].value
+                vendorId: loggedInUser.Merchant_ID
             };
             axios.post('https://souq-marketplace-api.onrender.com/product', registerModel)
             .then(Response => {
@@ -56,8 +56,6 @@ const AddProduct = ({handleLoggedInUser}) => {
                                             <label>Category <span className="required">*</span></label>
                                             <input type="text" name="productCategory" id="productCategory" required/>
                                         </div>
-                                        
-
                                         <div className="form-group mb-30">
                                             <label>Product Description <span className="required">*</span></label>
                                             <textarea name="productDescription" id="productDescription" ></textarea>
@@ -69,7 +67,6 @@ const AddProduct = ({handleLoggedInUser}) => {
                                         <div className="form-group">
                                             <label>Product Quality <span className="required">*</span></label>
                                             <input type="text" name="productQuality" id="productQuality"/>
-                                            <input type="hidden" name="vendorId" id="vendorId" value="1" />
                                         </div>  
                                         <div className="form-group">
                                             <button type="submit" value="submit" id="submit" className="li-btn-3" name="submit">Add New Product</button>

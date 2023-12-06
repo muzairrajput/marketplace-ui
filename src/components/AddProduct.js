@@ -11,8 +11,22 @@ const AddProduct = ({loggedInUser}) => {
     const navigate = useNavigate()
     
     const handleImageUpload = async (image) => {
+        console.log(image);
         setImage(image);
         //setImageUrl(response);
+        var formData = new FormData();
+        formData.append('file',image);
+        axios.post('https://souq-marketplace-api.onrender.com/imageUpload', formData)
+        .then(Response => {
+            if(Response.status == 200) {
+                console.log(Response.data);
+                setImageUrl(Response.data.response_data.Location)
+            } else {
+                console.log("error");
+                return alert('Error adding product')
+            }
+        })
+        .catch(err => {console.log(err); return alert(err); });
     }
 
     const handleAddProduct = (e) => {
@@ -24,7 +38,8 @@ const AddProduct = ({loggedInUser}) => {
             category: e.target.elements[2].value, 
             price: e.target.elements[4].value, 
             stock: e.target.elements[5].value,
-            vendorId: loggedInUser.Merchant_ID
+            vendorId: loggedInUser.Merchant_ID,
+            imageUrl: imageUrl
         };
         axios.post('https://souq-marketplace-api.onrender.com/product', registerModel)
         .then(Response => {
@@ -85,7 +100,7 @@ const AddProduct = ({loggedInUser}) => {
                         <div className="contact-page-side-content">
                             <h3 className="contact-page-title">Image</h3>
                             <div>
-                                {image && <img src={URL.createObjectURL(image)} alt="Uploaded" />}
+                                {image && <img style={{width:'300px', height: '300px'}} src={URL.createObjectURL(image)} alt="Uploaded" />}
                             </div>;
                         </div>
                     </div>

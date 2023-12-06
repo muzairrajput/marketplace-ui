@@ -22,7 +22,7 @@ const MerchantHome = ({loggedInUser}) => {
   
   return (
     <div>
-            <div className="body-wrapper">
+        <div className="body-wrapper">
         
             <div className="breadcrumb-area">
                 <div className="container">

@@ -24,9 +24,7 @@ const Navbar = ({ loggedInUser, cartItems }) => {
                             {/* <!-- Begin Header Logo Area --> */}
                             <div className="col-lg-3">
                                 <div className="logo pb-sm-30 pb-xs-30">
-                                    <a href="/">
-                                        <img src="assets/images/menu/logo/1.jpg" alt="" />
-                                    </a>
+                                    <img src="assets/images/menu/logo/1.jpg" alt="" onClick={() => navigate("/")} />
                                 </div>
                             </div>
                             {/* <!-- Header Logo Area End Here --> */}
@@ -124,13 +122,16 @@ const Navbar = ({ loggedInUser, cartItems }) => {
                                             <nav>
                                                 <ul>
                                                     <li className="dropdown-holder" onClick={() => navigate("/")}>Home</li>
-                                                    <li className="catmenu-dropdown megamenu-holder"><a href="/Shop">Categories</a>
+                                                    <li className="catmenu-dropdown megamenu-holder"><a href="#">Categories</a>
                                                         <ul className="megamenu hb-megamenu">
                                                             <li onClick={() => navigate("/shop?category=beauty")}>
                                                                 Beauty & Cosmetics
                                                             </li>
                                                             <li onClick={() => navigate("/shop?category=hardware")}>
                                                                 Hardware
+                                                            </li>
+                                                            <li onClick={() => navigate("/shop?category=electronics")}>
+                                                                Electronics
                                                             </li>
                                                         </ul>
                                                     </li>

@@ -165,7 +165,7 @@ const ChatRoom = ({deleteCart}) => {
         <h1>Chatrooms</h1>
         <ul>
             {chatRooms.map((chatroom) => (
-                <button className='selectedChatRoom' key={chatroom.ChatRoom_ID} 
+                <button className='register-button mt-0' key={chatroom.ChatRoom_ID} 
                   onClick={() => handleSelectChatroom(chatroom.ChatRoom_ID)}>
                         ChatRoom {chatroom.ChatRoom_ID}
                 </button>

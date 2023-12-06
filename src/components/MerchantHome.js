@@ -8,8 +8,9 @@ const MerchantHome = ({loggedInUser}) => {
   
   useEffect(() => {
     console.log(loggedInUser);
+    var merchantId =loggedInUser.Merchant_ID;
     // GET request using axios inside useEffect React hook
-    const url = `https://souq-marketplace-api.onrender.com/product?vendorId=${loggedInUser.Merchant_ID}`;
+    const url = 'https://souq-marketplace-api.onrender.com/product?vendorId='+merchantId;
     axios.get(url)
         .then(response => {
             setProducts(response.data);
@@ -17,7 +18,7 @@ const MerchantHome = ({loggedInUser}) => {
         .catch(error => {
           console.error('There was an error!', error);
         });
-  }, []);
+  }, [loggedInUser]);
   
   return (
     <div>

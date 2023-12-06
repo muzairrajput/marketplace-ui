@@ -46,7 +46,7 @@ const ProductDetail = () => {
                                         <div className="product-details-images slider-navigation-1">
                                             <div className="lg-image">
                                                 <a className="popup-img venobox vbox-item" href="assets/images/product/large-size/1.jpg" data-gall="myGallery">
-                                                    <img src="assets/images/product/large-size/1.jpg" alt="product image"/>
+                                                    <img style={{width:'350px', height: '330px'}} src={productDetails.Image} alt="product image"/>
                                                 </a>
                                             </div>
                                         </div>

@@ -49,7 +49,7 @@ const MerchantHome = ({loggedInUser}) => {
                                                         <div className="single-product-wrap">
                                                             <div className="product-image">
                                                                 <a href={`/productDetail?productId=${p.Product_ID}`}>
-                                                                    <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
+                                                                    <img style={{width: '280px', height: '200px'}} src={p.Image} alt="Li's Product Image"/>
                                                                 </a>
                                                                 <span className="sticker"></span>
                                                             </div>

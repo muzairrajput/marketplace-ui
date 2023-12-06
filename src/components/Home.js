@@ -94,7 +94,7 @@ const Home = ({cartItems, addCartItem}) => {
                                                     <div className="col-lg-4 col-md-4 col-sm-6 mt-40"> 
                                                         <div className="single-product-wrap">
                                                             <div className="product-image" onClick={() => handleProductDetailNavigation(p.Product_ID)}>
-                                                                <img src="assets/images/product/large-size/1.jpg" alt="Li's Product Image"/>
+                                                                <img style={{width: '280px', height: '200px'}} src={p.Image} alt="Li's Product Image"/>
                                                                 <span className="sticker"></span>
                                                             </div>
                                                             <div className="product_desc">
